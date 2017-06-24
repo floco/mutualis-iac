@@ -3,6 +3,11 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# ansible
+*.retry
+tmp/
+cp/
+
 # C extensions
 *.so
 
