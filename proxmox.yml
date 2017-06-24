@@ -1,0 +1,10 @@
+- hosts: proxmox
+  remote_user: root
+
+  tasks:
+    - name: Comment out enterprise source
+      replace:
+        dest: /etc/apt/sources.list.d/pve-enterprise.list
+        regexp: '^deb https://enterprise.proxmox.com'
+        replace: '#deb https://enterprise.proxmox.com'
+      tags: update-proxmox-source
