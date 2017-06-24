@@ -54,4 +54,4 @@
       - name: br-ex
         iface: eth1
   roles:
-     - ovs_bridges
+     - ovs-bridges
