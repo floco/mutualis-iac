@@ -1,0 +1,21 @@
+---
+- hosts: proxmox
+  remote_user: root
+
+  tasks:
+
+    - name: Install Open vSwitch
+      apt:
+        name: '{{ item }}'
+        state: 'latest'
+        update_cache: 'yes'
+      with_items:
+        - 'vlan'
+        - 'ifenslave'
+        - 'python-lxml'
+        - 'openvswitch-switch'
+
+    - name: Create ovs bridge
+      openvswitch_bridge:
+        bridge: br0
+        state: present

@@ -46,19 +46,3 @@
     - name: List services to restart (2/2)
       debug: msg="{{ services.stdout_lines | count }} services to restart ({{ services.stdout_lines | join (', ') }})"
       when: (ansible_os_family == 'Debian' and services.stdout_lines)
-
-    - name: Install Open vSwitch
-      apt:
-        name: '{{ item }}'
-        state: 'latest'
-        update_cache: 'yes'
-      with_items:
-        - 'vlan'
-        - 'ifenslave'
-        - 'python-lxml'
-        - 'openvswitch-switch'
-
-    - name: Create ovs bridge
-      openvswitch_bridge:
-        bridge: br0
-        state: present
