@@ -6,19 +6,8 @@
     prompt: "Hostname"
     private: no
 
-  - name: "api_host"
-    prompt: "PVE API host"
-    default: "localhost"
-    private: no
-
-  - name: "node"
-    prompt: "PVE target node"
-    default: "ns3080541"
-    private: no
-
-  - name: "storage"
-    prompt: "PVE target storage"
-    default: "local"
+  - name: "vmnumber"
+    prompt: "VM Number"
     private: no
 
   - name: "disk_size"
@@ -34,6 +23,21 @@
   - name: "vmbr"
     prompt: "vmbr"
     default: "vmbr1"
+    private: no
+
+  - name: "api_host"
+    prompt: "PVE API host"
+    default: ""
+    private: no
+
+  - name: "node"
+    prompt: "PVE target node"
+    default: ""
+    private: no
+
+  - name: "storage"
+    prompt: "PVE target storage"
+    default: "local"
     private: no
 
   - name: "api_user"
@@ -54,15 +58,19 @@
       api_host: "{{ api_host }}"
       node: "{{ node }}"
       name: "{{ vmname }}"
-      vmid: 103
+      vmid: "{{ vmnumber }}"
       net: '{"net0":"virtio,bridge={{ vmbr }}"}'
-      #virtio: '{"virtio0":"{{ storage }}:{{ disk_size }},cache=writeback"}'
-      ide: '{"ide0":"{{ storage }}:{{ disk_size }},cache=writeback","ide2":"{{ storage }}:iso/rancheros.iso,media=cdrom"}'
+      virtio: '{"virtio0":"{{ storage }}:{{ disk_size }},cache=writeback"}'
+      #ide: '{"ide0":"{{ storage }}:iso/rancheros.iso,media=cdrom","ide1":"{{ storage }}:iso/cloud-config.iso,media=cdrom"}'
+      ide: '{"ide0":"{{ storage }}:iso/rancheros.iso,media=cdrom"}'
       cores: 2
       memory: "{{ memory_size }}"
       vga: qxl
       ostype: l26
       state: present
+
+  - pause:
+      seconds: 5
 
   - name: Start VM
     proxmox_kvm:
