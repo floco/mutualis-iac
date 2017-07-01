@@ -1,0 +1,74 @@
+- hosts: localhost
+  gather_facts: false
+
+  vars_prompt:
+  - name: "vmname"
+    prompt: "Hostname"
+    private: no
+
+  - name: "api_host"
+    prompt: "PVE API host"
+    default: "localhost"
+    private: no
+
+  - name: "node"
+    prompt: "PVE target node"
+    default: "ns3080541"
+    private: no
+
+  - name: "storage"
+    prompt: "PVE target storage"
+    default: "local"
+    private: no
+
+  - name: "disk_size"
+    prompt: "boot disk size in GB"
+    default: "8"
+    private: no
+
+  - name: "memory_size"
+    prompt: "memory size in MB"
+    default: "2048"
+    private: no
+
+  - name: "vmbr"
+    prompt: "vmbr"
+    default: "vmbr1"
+    private: no
+
+  - name: "api_user"
+    prompt: "PVE API user"
+    default: "root@pam"
+    private: no
+
+  - name: "api_password"
+    prompt: "PVE API password"
+    private: yes
+
+  tasks:
+
+  - name: Create VM
+    proxmox_kvm:
+      api_user: "{{ api_user }}"
+      api_password: "{{ api_password }}"
+      api_host: "{{ api_host }}"
+      node: "{{ node }}"
+      name: "{{ vmname }}"
+      vmid: 103
+      net: '{"net0":"virtio,bridge={{ vmbr }}"}'
+      #virtio: '{"virtio0":"{{ storage }}:{{ disk_size }},cache=writeback"}'
+      ide: '{"ide0":"{{ storage }}:{{ disk_size }},cache=writeback","ide2":"{{ storage }}:iso/rancheros.iso,media=cdrom"}'
+      cores: 2
+      memory: "{{ memory_size }}"
+      vga: qxl
+      ostype: l26
+      state: present
+
+  - name: Start VM
+    proxmox_kvm:
+      api_user: "{{ api_user }}"
+      api_password: "{{ api_password }}"
+      api_host: "{{ api_host }}"
+      node: "{{ node }}"
+      name: "{{ vmname }}"
+      state: started
