@@ -1,0 +1,25 @@
+#cloud-config
+
+hostname: ranchersos
+
+rancher:
+  network:
+    dns:
+      nameservers:
+      - 10.0.1.1
+      - 8.8.8.8
+    interfaces:
+      eth*:
+        dhcp: false
+      eth0:
+        address: 10.0.1.99/24
+        gateway: 10.0.1.1
+        mtu: 1500
+  console: debian
+
+ssh_authorized_keys:
+  - ssh-rsa ...
+   
+runcmd:
+  - [ apt-get, update ]
+  - [ apt-get, install, -y, python ]
