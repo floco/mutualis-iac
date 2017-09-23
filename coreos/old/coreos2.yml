@@ -1,0 +1,225 @@
+- name: set vars
+  hosts: localhost,proxmox
+  gather_facts: false
+
+  vars_prompt:
+  - name: "vmname"
+    prompt: "Hostname"
+    private: no
+    default: "mediacore"
+
+  - name: "vmnumber"
+    prompt: "VM Number"
+    private: no
+    default: "204"
+
+  - name: "disk_size"
+    prompt: "boot disk size in GB"
+    default: "64"
+    private: no
+
+  - name: "memory_size"
+    prompt: "memory size in MB"
+    default: "2048"
+    private: no
+
+  - name: "vmbr"
+    prompt: "vmbr"
+    default: "vmbr0"
+    private: no
+
+  - name: "cidr"
+    prompt: "CIDR"
+    default: "192.168.1.233/24"
+    private: no
+
+  - name: "gateway"
+    prompt: "Gateway"
+    default: "192.168.1.1"
+    private: no
+
+  - name: "mac"
+    prompt: "MAC"
+    default: "AA:71:69:0C:84:4F"
+    private: no
+
+  - name: "api_host"
+    prompt: "PVE API host"
+    default: "192.168.1.253"
+    private: no
+
+  - name: "node"
+    prompt: "PVE target node"
+    default: "proxmox"
+    private: no
+
+  - name: "storage"
+    prompt: "PVE target storage"
+    default: "local"
+    private: no
+
+  - name: "api_user"
+    prompt: "PVE API user"
+    default: "root@pam"
+    private: no
+
+  - name: "api_password"
+    prompt: "PVE API password"
+    private: yes
+
+  tasks:
+  - set_fact:
+      vmname: "{{ vmname }}"
+      vmnumber: "{{ vmnumber }}"
+      disk_size: "{{ disk_size }}"
+      memory_size: "{{ memory_size }}"
+      vmbr: "{{ vmbr }}"
+      cidr: "{{ cidr }}"
+      gateway: "{{ gateway }}"
+      mac: "{{ mac }}"
+      api_host: "{{ api_host }}"
+      node: "{{ node }}"
+      storage: "{{ storage }}"
+      api_user: "{{ api_user }}"
+      api_password: "{{ api_password }}"
+
+- hosts: proxmox
+  gather_facts: false
+  tasks:
+
+  - name: Create VM directory
+    file: path="/var/lib/vz/images/{{ vmnumber }}" state=directory
+
+  - name: check if img is downloaded already 
+    stat:
+      path: /var/lib/vz/template/iso/{{coreos_image_name}}
+    register: coreos_image_file
+
+  - name: download coreos image locally
+    get_url:
+      url: "{{coreos_image_src_url}}/{{item}}"
+      dest: "/var/lib/vz/template/iso/{{item}}"
+    with_items:
+      - "{{coreos_image_name}}.bz2"
+      - "{{coreos_image_name}}.bz2.DIGESTS"
+      - "{{coreos_image_name}}.bz2.DIGESTS.asc"
+      - "{{coreos_image_name}}.bz2.sig"
+      - "version.txt"
+    when: coreos_image_file.stat.exists == False 
+ 
+  - name: unarchive img
+    raw: bunzip2 /var/lib/vz/template/iso/{{coreos_image_name}}.bz2
+    when: coreos_image_file.stat.exists == False 
+
+  - name: Copy coreos img 
+    copy:
+      src: "/var/lib/vz/template/qemu/{{coreos_image_name}}"
+      dest: "/var/lib/vz/images/{{vmnumber}}/"
+      owner: root
+      group: root
+      mode: 0600
+      remote_src: yes
+
+# Does not work with bz2
+# - name: Unarchive coreos img and move to VM dir
+#   unarchive:
+#     src: /var/lib/vz/template/iso/{{coreos_image_name}}.bz2
+#     dest: "/var/lib/vz/images/{{ vmnumber }}"
+#     remote_src: yes
+
+  # qemu-img create -f qcow2 -b coreos_production_qemu_image.img vm-204-disk-1.qcow2
+  - name: Create qcow 
+    raw: qemu-img create -f qcow2 -b /var/lib/vz/images/{{vmnumber}}/{{coreos_image_name}} /var/lib/vz/images/{{vmnumber}}/vm-{{vmnumber}}-disk-1.qcow2
+
+  # qemu-img resize vm-204-disk-1.qcow2 +5G
+# - name: resize qcow 
+#   raw: qemu-img resize /var/lib/vz/images/{{vmnumber}}/vm-{{vmnumber}}-disk-1.qcow2  {{disk_size}}G
+
+  - name: Copy coreos ignition
+    template:
+      src: "./files/provision.ign.j2"
+      dest: "/var/lib/vz/images/{{ vmnumber }}/provision.ign"
+      owner: root
+      group: root
+      mode: 0600
+
+# - name: Copy coreos qcow
+#   copy:
+#     src: "./files/vm-XXX-disk-1.qcow2"
+#     dest: "/var/lib/vz/images/{{ vmnumber }}/vm-{{ vmnumber }}-disk-1.qcow2"
+#     owner: root
+#     group: root
+#     mode: 0600
+
+# - name: Copy coreos img 
+#   copy:
+#     src: "/var/lib/vz/template/qemu/coreos_production_qemu_image.img"
+#     dest: "/var/lib/vz/images/{{ vmnumber }}/"
+#     owner: root
+#     group: root
+#     mode: 0600
+#     remote_src: yes
+
+- hosts: localhost
+  gather_facts: false
+  tasks:
+
+  - name: Create VM
+    proxmox_kvm:
+      api_user: "{{ api_user }}"
+      api_password: "{{ api_password }}"
+      api_host: "{{ api_host }}"
+      node: "{{ node }}"
+      name: "{{ vmname }}"
+      vmid: "{{ vmnumber }}"
+      args: "-fw_cfg name=opt/com.coreos/config,file=/var/lib/vz/images/{{ vmnumber }}/provision.ign"
+      net: '{"net0":"virtio={{ mac }},bridge={{ vmbr }}"}'
+      virtio: '{"virtio0":"{{ storage }}:{{ vmnumber }}/vm-{{ vmnumber }}-disk-1.qcow2,format=qcow2,cache=writeback,size={{ disk_size }}G"}'
+      #ide: '{"ide0":"{{ storage }}:iso/rancheros.iso,media=cdrom","ide1":"{{ storage }}:iso/cloud-config.iso,media=cdrom"}'
+      #ide: '{"ide0":"{{ storage }}:iso/rancheros.iso,media=cdrom"}'
+      cores: 2
+      memory: "{{ memory_size }}"
+      vga: qxl
+      ostype: l26
+      state: present
+
+  - pause:
+      seconds: 15
+
+  - name: Start VM
+    proxmox_kvm:
+      api_user: "{{ api_user }}"
+      api_password: "{{ api_password }}"
+      api_host: "{{ api_host }}"
+      node: "{{ node }}"
+      name: "{{ vmname }}"
+      state: started
+
+  - pause:
+      seconds: 30
+
+- name: coreos-ansible-compose
+  hosts: coreos
+  gather_facts: False
+  become: true
+  vars:
+    timeset: false
+  roles:
+    - isca0.coreos-bootstrap
+
+- name: install media docker services
+  hosts: coreos
+  gather_facts: False
+  tasks:
+  - name: clone git repo
+    git:
+      repo: 'https://github.com/floco/mutualis-cloud.git'
+      dest: /home/core/mutualis-cloud
+  - name: Extract media-data.tgz
+    unarchive:
+      src: ./files/media-data.tgz
+      dest: /home/core/mutualis-cloud/media
+  - name: start all media services
+    docker_service:
+      project_src: /home/core/mutualis-cloud/media
+      state: present
