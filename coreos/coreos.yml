@@ -6,7 +6,7 @@
     file: path="/var/lib/vz/images/{{ vmnumber }}" state=directory
     delegate_to: proxmox_home
 
-  - name: check if img is downloaded already 
+  - name: check if img is downloaded already
     stat:
       path: /var/lib/vz/template/iso/{{coreos_image_name}}
     register: coreos_image_file
@@ -22,15 +22,15 @@
       - "{{coreos_image_name}}.bz2.DIGESTS.asc"
       - "{{coreos_image_name}}.bz2.sig"
       - "version.txt"
-    when: coreos_image_file.stat.exists == False 
-    delegate_to: proxmox_home
- 
-  - name: unarchive img
-    raw: bunzip2 /var/lib/vz/template/iso/{{coreos_image_name}}.bz2
-    when: coreos_image_file.stat.exists == False 
+    when: coreos_image_file.stat.exists == False
     delegate_to: proxmox_home
 
-  - name: Copy coreos img 
+  - name: unarchive img
+    raw: bunzip2 /var/lib/vz/template/iso/{{coreos_image_name}}.bz2
+    when: coreos_image_file.stat.exists == False
+    delegate_to: proxmox_home
+
+  - name: Copy coreos img
     copy:
       src: "/var/lib/vz/template/iso/{{coreos_image_name}}"
       dest: "/var/lib/vz/images/{{vmnumber}}/"
@@ -40,11 +40,11 @@
       remote_src: yes
     delegate_to: proxmox_home
 
-  - name: Create qcow 
+  - name: Create qcow
     shell: qemu-img create -f qcow2 -b /var/lib/vz/images/{{vmnumber}}/{{coreos_image_name}} /var/lib/vz/images/{{vmnumber}}/vm-{{vmnumber}}-disk-1.qcow2
     delegate_to: proxmox_home
 
-  - name: Resize qcow 
+  - name: Resize qcow
     shell: qemu-img resize /var/lib/vz/images/{{vmnumber}}/vm-{{vmnumber}}-disk-1.qcow2  {{disk_size}}G
     delegate_to: proxmox_home
 
@@ -113,10 +113,10 @@
       repo: 'https://github.com/floco/mutualis-cloud.git'
       dest: /home/core/mutualis-cloud
 
-  - name: Extract media-data.tgz
+  - name: Extract {{coreos_role}}-data.tgz
     unarchive:
-      src: ./files/media-data.tgz
-      dest: /home/core/mutualis-cloud/media
+      src: ./files/{{coreos_role}}-data.tgz
+      dest: /home/core/mutualis-cloud/{{coreos_role}}
 
-  - name: start all media services
-    shell: /home/core/mutualis-cloud/dc media start
+  - name: start all {{coreos_role}} services
+    shell: /home/core/mutualis-cloud/dc {{coreos_role}} start
