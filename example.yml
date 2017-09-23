@@ -1,0 +1,139 @@
+# Ansible version of https://morph027.gitlab.io/post/pve-kickseed/
+# Example args file: https://gitlab.com/snippets/1548095
+#
+# Set vars when calling:
+# ansible-playbook -e "args_template=files/args-centos-gitlab-runner.ks" -e "kernel=http://ftp.hosteurope.de/mirror/centos.org/7/os/x86_64/isolinux/vmlinuz" -e "initrd=http://ftp.hosteurope.de/mirror/centos.org/7/os/x86_64/isolinux/initrd.img" ansible/playbooks/proxmox-kickseed.yml
+#
+---
+
+- hosts: localhost
+  gather_facts: false
+
+  vars_prompt:
+  - name: "vmname"
+    prompt: "VM name?: "
+    private: no
+  - name: "args_template"
+    prompt: "args template?: "
+    default: "files/args-ubuntu-docker.yml"
+    private: no
+  - name: "kernel"
+    prompt: "kernel?: "
+    default: "http://deploy.example.com/preseed/linux"
+    private: no
+  - name: "initrd"
+    prompt: "initrd?: "
+    default: "http://deploy.example.com/preseed/initrd.gz"
+    private: no
+  - name: "api_host"
+    prompt: "PVE API host?: "
+    default: "my-proxmox"
+    private: no
+  - name: "node"
+    prompt: "PVE target node?: "
+    default: "another-proxmox-node"
+    private: no
+  - name: "api_user"
+    prompt: "PVE API user?: "
+    default: "root@pam"
+    private: no
+  - name: "api_password"
+    prompt: "PVE API password?: "
+    private: yes
+
+  tasks:
+  - name: Random port number
+    set_fact:
+      port_number: "{{ 65000 |random(start=32000) }}"
+
+  - name: Create KVM
+    proxmox_kvm:
+      api_user: "{{ api_user }}"
+      api_password: "{{ api_password }}"
+      api_host: "{{ api_host }}"
+      node: "{{ node }}"
+      name: "{{ vmname }}"
+      net: '{"net0":"virtio,bridge=vmbr0"}'
+      virtio: '{"virtio0":"rpool-vm:64"}'
+      cores: 2
+      memory: 2048
+      balloon: 512
+      vga: qxl
+      ostype: l26
+      args: "{{ lookup('template', '{{ args_template }}') | replace('\n', ' ')}}"
+      state: present
+
+  - name: Let it settle
+    pause:
+      seconds: 5
+
+  - name: Fetch kernel
+    get_url:
+      url:  "{{ kernel }}"
+      dest: "/tmp/kernel"
+    delegate_to: "{{ node }}"
+
+  - name: Fetch initrd
+    get_url:
+      url:  "{{ initrd }}"
+      dest: "/tmp/initrd"
+    delegate_to: "{{ node }}"
+
+  - name: Wait for kernel
+    wait_for:
+      path: /tmp/kernel
+    delegate_to: "{{ node }}"
+
+  - name: Wait for initrd
+    wait_for:
+      path: /tmp/initrd
+    delegate_to: "{{ node }}"
+
+  - name: Deploy VM
+    proxmox_kvm:
+      api_user: "{{ api_user }}"
+      api_password: "{{ api_password }}"
+      api_host: "{{ api_host }}"
+      node: "{{ node }}"
+      name: "{{ vmname }}"
+      state: started
+
+  - name: Get VMID
+    proxmox_kvm:
+      api_user: "{{ api_user }}"
+      api_password: "{{ api_password }}"
+      api_host: "{{ api_host }}"
+      node: "{{ node }}"
+      name: "{{ vmname }}"
+      state: current
+    register: result
+
+  - name: Set VMID
+    set_fact:
+      vmid: "{{ result.msg | regex_replace('^.* = (\\d+).*?$', '\\1') }}"
+
+  - name: Wait for deployment to be finished
+    wait_for:
+      host: "{{ node }}"
+      port: "{{ port_number }}"
+      delay: 5
+      state: stopped
+      timeout: 1200
+
+  - name: Remove deploy args from VM
+    proxmox_kvm:
+      api_user: "{{ api_user }}"
+      api_password: "{{ api_password }}"
+      api_host: "{{ api_host }}"
+      node: "{{ node }}"
+      name: "{{ vmname }}"
+      delete: args
+
+  - name: Start VM (again)
+    proxmox_kvm:
+      api_user: "{{ api_user }}"
+      api_password: "{{ api_password }}"
+      api_host: "{{ api_host }}"
+      node: "{{ node }}"
+      name: "{{ vmname }}"
+      state: started
