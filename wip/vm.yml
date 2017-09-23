@@ -60,7 +60,7 @@
       name: "{{ vmname }}"
       vmid: "{{ vmnumber }}"
       net: '{"net0":"virtio,bridge={{ vmbr }}"}'
-      virtio: '{"virtio0":"{{ storage }}:{{ disk_size }},cache=writeback"}'
+      virtio: '{"virtio0":"{{ storage }}:{{ disk_size }},format=qcow2,cache=writeback"}'
       #ide: '{"ide0":"{{ storage }}:iso/rancheros.iso,media=cdrom","ide1":"{{ storage }}:iso/cloud-config.iso,media=cdrom"}'
       ide: '{"ide0":"{{ storage }}:iso/rancheros.iso,media=cdrom"}'
       cores: 2
@@ -70,7 +70,7 @@
       state: present
 
   - pause:
-      seconds: 5
+      seconds: 10
 
   - name: Start VM
     proxmox_kvm:

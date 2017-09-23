@@ -1,0 +1,6 @@
+- name: test
+  hosts: rancheros
+  gather_facts: False
+#  become: yes
+  roles:
+    - merhylstudio.rosonpve

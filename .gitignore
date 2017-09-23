@@ -1,3 +1,9 @@
+# ignore mac files
+**/.DS_Store
+
+# ignore data tgz 
+**/*.tgz
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

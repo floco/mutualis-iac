@@ -1,0 +1,122 @@
+- hosts: coreos
+  gather_facts: false
+  pre_tasks:
+
+  - name: Create VM directory
+    file: path="/var/lib/vz/images/{{ vmnumber }}" state=directory
+    delegate_to: proxmox_home
+
+  - name: check if img is downloaded already 
+    stat:
+      path: /var/lib/vz/template/iso/{{coreos_image_name}}
+    register: coreos_image_file
+    delegate_to: proxmox_home
+
+  - name: download coreos image locally
+    get_url:
+      url: "{{coreos_image_src_url}}/{{item}}"
+      dest: "/var/lib/vz/template/iso/{{item}}"
+    with_items:
+      - "{{coreos_image_name}}.bz2"
+      - "{{coreos_image_name}}.bz2.DIGESTS"
+      - "{{coreos_image_name}}.bz2.DIGESTS.asc"
+      - "{{coreos_image_name}}.bz2.sig"
+      - "version.txt"
+    when: coreos_image_file.stat.exists == False 
+    delegate_to: proxmox_home
+ 
+  - name: unarchive img
+    raw: bunzip2 /var/lib/vz/template/iso/{{coreos_image_name}}.bz2
+    when: coreos_image_file.stat.exists == False 
+    delegate_to: proxmox_home
+
+  - name: Copy coreos img 
+    copy:
+      src: "/var/lib/vz/template/iso/{{coreos_image_name}}"
+      dest: "/var/lib/vz/images/{{vmnumber}}/"
+      owner: root
+      group: root
+      mode: 0600
+      remote_src: yes
+    delegate_to: proxmox_home
+
+  - name: Create qcow 
+    shell: qemu-img create -f qcow2 -b /var/lib/vz/images/{{vmnumber}}/{{coreos_image_name}} /var/lib/vz/images/{{vmnumber}}/vm-{{vmnumber}}-disk-1.qcow2
+    delegate_to: proxmox_home
+
+  - name: Resize qcow 
+    shell: qemu-img resize /var/lib/vz/images/{{vmnumber}}/vm-{{vmnumber}}-disk-1.qcow2  {{disk_size}}G
+    delegate_to: proxmox_home
+
+  - name: Copy coreos ignition
+    template:
+      src: "./files/provision.ign.j2"
+      dest: "/var/lib/vz/images/{{ vmnumber }}/provision.ign"
+      owner: root
+      group: root
+      mode: 0600
+    delegate_to: proxmox_home
+
+  - name: Create VM
+    proxmox_kvm:
+      api_user: "{{ api_user }}"
+      api_password: "{{ api_password }}"
+      api_host: "{{ api_host }}"
+      node: "{{ node }}"
+      name: "{{ vmname }}"
+      vmid: "{{ vmnumber }}"
+      args: "-fw_cfg name=opt/com.coreos/config,file=/var/lib/vz/images/{{ vmnumber }}/provision.ign"
+      net: '{"net0":"virtio={{ mac }},bridge={{ vmbr }}"}'
+      virtio: '{"virtio0":"{{ storage }}:{{ vmnumber }}/vm-{{ vmnumber }}-disk-1.qcow2,format=qcow2,cache=writeback,size={{ disk_size }}G"}'
+      cores: 2
+      memory: "{{ memory_size }}"
+      vga: qxl
+      ostype: l26
+      state: present
+    delegate_to: localhost
+
+  - pause:
+      seconds: 15
+
+  - name: Start VM
+    proxmox_kvm:
+      api_user: "{{ api_user }}"
+      api_password: "{{ api_password }}"
+      api_host: "{{ api_host }}"
+      node: "{{ node }}"
+      name: "{{ vmname }}"
+      state: started
+    delegate_to: localhost
+
+  - pause:
+      seconds: 30
+
+  roles:
+    - vmware.coreos-bootstrap
+
+  post_tasks:
+  - name: "Installing docker-compose via github url"
+    get_url:
+      url: "{{ downcompose }}"
+      dest: "{{ dkcompose }}"
+      validate_certs: no
+      mode: 0755
+
+  - name: "Adjusting docker-compose symlinks"
+    file:
+      src: "{{ dkcompose }}"
+      dest: "/home/core/pypy/bin/docker-compose"
+      state: link
+
+  - name: clone git repo
+    git:
+      repo: 'https://github.com/floco/mutualis-cloud.git'
+      dest: /home/core/mutualis-cloud
+
+  - name: Extract media-data.tgz
+    unarchive:
+      src: ./files/media-data.tgz
+      dest: /home/core/mutualis-cloud/media
+
+  - name: start all media services
+    shell: /home/core/mutualis-cloud/dc media start
