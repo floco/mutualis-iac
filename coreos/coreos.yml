@@ -110,12 +110,14 @@
 
   - name: Create /opt/bin directory
     file: path="/opt/bin" state=directory
+    become: true
 
   - name: "Adding opt docker-compose symlinks"
     file:
       src: "{{ dkcompose }}"
       dest: "/opt/bin/docker-compose"
-      state: link 
+      state: link
+    become: true 
 
   - name: clone git repo
     git:
