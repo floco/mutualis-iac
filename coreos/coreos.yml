@@ -105,8 +105,17 @@
   - name: "Adjusting docker-compose symlinks"
     file:
       src: "{{ dkcompose }}"
-      dest: "/home/core/pypy/bin/docker-compose"
+      dest: "/home/core/bin/docker-compose"
       state: link
+
+  - name: Create /opt/bin directory
+    file: path="/opt/bin" state=directory
+
+  - name: "Adding opt docker-compose symlinks"
+    file:
+      src: "{{ dkcompose }}"
+      dest: "/opt/bin/docker-compose"
+      state: link 
 
   - name: clone git repo
     git:
@@ -117,6 +126,14 @@
     unarchive:
       src: ./files/{{coreos_role}}-data.tgz
       dest: /home/core/mutualis-cloud/{{coreos_role}}
+
+  - name: Copy .env
+    template:
+      src: "./files/env.j2"
+      dest: "/home/core/mutualis-cloud/{{coreos_role}}/.env"
+      owner: core
+      group: core
+      mode: 0600
 
   - name: start all {{coreos_role}} services
     shell: /home/core/mutualis-cloud/dc {{coreos_role}} start
