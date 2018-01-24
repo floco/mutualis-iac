@@ -117,7 +117,7 @@
       src: "{{ dkcompose }}"
       dest: "/opt/bin/docker-compose"
       state: link
-    become: true 
+    become: true
 
   - name: clone git repo
     git:
@@ -139,3 +139,10 @@
 
   - name: start all {{coreos_role}} services
     shell: /home/core/mutualis-cloud/dc {{coreos_role}} start
+
+# hassio
+# docker run --rm -v /opt/bin:/opt/bin xueshanf/install-socat
+# curl -sL https://raw.githubusercontent.com/home-assistant/hassio-build/master/install/hassio_install > /root/install.sh
+# chmod 700 /root/install.sh
+# # Update dirs
+# /root/install.sh  
