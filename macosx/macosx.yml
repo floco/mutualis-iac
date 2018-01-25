@@ -24,3 +24,32 @@
     - homebrew_cask:
         name: calibre
         state: present
+    - homebrew_cask:
+        name: opera
+        state: present
+    - homebrew_cask:
+        name: 
+        state: present
+    - homebrew_cask:
+        name: 
+        state: present
+    - homebrew_cask:
+        name: 
+        state: present        
+    - homebrew_cask:
+        name: 
+        state: present
+    - homebrew_cask:
+        name: 
+        state: present
+    - homebrew_cask:
+        name: 
+        state: present
+    - homebrew_cask:
+        name: 
+        state: present
+    - homebrew_cask:
+        name: 
+        state: present
+
+        
