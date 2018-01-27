@@ -3,13 +3,34 @@
   gather_facts: false
 
   tasks:
-    - homebrew_cask: name=visual-studio-code state=present
+
+  # UTILITIES
     - homebrew_cask: name=spectacle state=present
-    - homebrew_cask: name=google-chrome state=present
     - homebrew_cask: name=google-backup-and-sync state=present
     - homebrew_cask: name=android-file-transfer state=present
-    - homebrew_cask: name=calibre state=present
+    - homebrew_cask: name=the-unarchiver state=present
+    - homebrew_cask: name=imageoptim state=present        
+    - homebrew_cask: name=flux state=present        
+    - homebrew_cask: name=quicklook-csv state=present        
+    - homebrew_cask: name=quicklook-json state=present        
+  # BROWSERS
     - homebrew_cask: name=opera state=present
-      
+    - homebrew_cask: name=google-chrome state=present
+    - homebrew_cask: name=firefox state=present
+  # DEV
+    - homebrew_cask: name=visual-studio-code state=present
+    - homebrew_cask: name=fish state=present
+    - homebrew_cask: name=iterm2 state=present
+    - homebrew_cask: name=sequel-pro state=present
+  # MEDIA
+    - homebrew_cask: name=calibre state=present 
+    - homebrew_cask: name=vlc state=present 
+  # COMMUNICATION 
+    - homebrew_cask: name=skype state=present 
+
+  # To install via app store: amphetamine 
+  # To install manually: 
+  # To review first: station 
+
 
         
