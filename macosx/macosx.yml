@@ -20,7 +20,11 @@
         - flux
         - quicklook-csv 
         - quicklook-json 
-        - vanilla 
+        - bootchamp
+        - superduper
+        - teamviewer
+        - lastpass
+        - zerotier-one
 
     - name: Install Browsers
       homebrew_cask: name={{ item }} state=present
