@@ -25,6 +25,7 @@
         - teamviewer
         - lastpass
         - zerotier-one
+        - etcher
 
     - name: Install Browsers
       homebrew_cask: name={{ item }} state=present
