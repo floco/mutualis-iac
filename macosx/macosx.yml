@@ -20,6 +20,8 @@
         - flux
         - quicklook-csv 
         - quicklook-json 
+        - istat-menus
+        - vanilla 
 
     - name: Install Browsers
       homebrew_cask: name={{ item }} state=present
@@ -27,6 +29,7 @@
         - opera
         - google-chrome
         - firefox 
+        - station
 
     - name: Install Dev Tools
       homebrew_cask: name={{ item }} state=present
