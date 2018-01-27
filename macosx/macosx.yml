@@ -4,6 +4,11 @@
 
   tasks:
 
+    - name: Install Libs
+      homebrew: name={{ item }} state=present
+      with_items:
+        - fish
+
     - name: Install Utilities
       homebrew_cask: name={{ item }} state=present
       with_items:
@@ -27,7 +32,6 @@
       homebrew_cask: name={{ item }} state=present
       with_items:
         - visual-studio-code
-        - fish
         - iterm2 
         - sequel-pro 
 
@@ -41,6 +45,8 @@
       homebrew_cask: name={{ item }} state=present
       with_items:
         - skype
+
+  
 
 
   # To install via app store: amphetamine 
