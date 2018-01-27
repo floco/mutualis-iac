@@ -4,29 +4,44 @@
 
   tasks:
 
-  # UTILITIES
-    - homebrew_cask: name=spectacle state=present
-    - homebrew_cask: name=google-backup-and-sync state=present
-    - homebrew_cask: name=android-file-transfer state=present
-    - homebrew_cask: name=the-unarchiver state=present
-    - homebrew_cask: name=imageoptim state=present        
-    - homebrew_cask: name=flux state=present        
-    - homebrew_cask: name=quicklook-csv state=present        
-    - homebrew_cask: name=quicklook-json state=present        
-  # BROWSERS
-    - homebrew_cask: name=opera state=present
-    - homebrew_cask: name=google-chrome state=present
-    - homebrew_cask: name=firefox state=present
-  # DEV
-    - homebrew_cask: name=visual-studio-code state=present
-    - homebrew_cask: name=fish state=present
-    - homebrew_cask: name=iterm2 state=present
-    - homebrew_cask: name=sequel-pro state=present
-  # MEDIA
-    - homebrew_cask: name=calibre state=present 
-    - homebrew_cask: name=vlc state=present 
-  # COMMUNICATION 
-    - homebrew_cask: name=skype state=present 
+    - name: Install Utilities
+      homebrew_cask: name={{ item }} state=present
+      with_items:
+        - spectacle
+        - google-backup-and-sync
+        - android-file-transfer
+        - the-unarchiver
+        - imageoptim
+        - flux
+        - quicklook-csv 
+        - quicklook-json 
+
+    - name: Install Browsers
+      homebrew_cask: name={{ item }} state=present
+      with_items:
+        - opera
+        - google-chrome
+        - firefox 
+
+    - name: Install Dev Tools
+      homebrew_cask: name={{ item }} state=present
+      with_items:
+        - visual-studio-code
+        - fish
+        - iterm2 
+        - sequel-pro 
+
+    - name: Install Media App
+      homebrew_cask: name={{ item }} state=present
+      with_items:
+        - calibre
+        - vlc
+
+    - name: Install Social Tools
+      homebrew_cask: name={{ item }} state=present
+      with_items:
+        - skype
+
 
   # To install via app store: amphetamine 
   # To install manually: 
