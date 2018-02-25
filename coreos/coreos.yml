@@ -4,13 +4,13 @@
 
   - name: Create VM directory
     file: path="/var/lib/vz/images/{{ vmnumber }}" state=directory
-    delegate_to: proxmox_home
+    delegate_to: proxmox
 
   - name: check if img is downloaded already
     stat:
       path: /var/lib/vz/template/iso/{{coreos_image_name}}
     register: coreos_image_file
-    delegate_to: proxmox_home
+    delegate_to: proxmox
 
   - name: download coreos image locally
     get_url:
@@ -23,12 +23,12 @@
       - "{{coreos_image_name}}.bz2.sig"
       - "version.txt"
     when: coreos_image_file.stat.exists == False
-    delegate_to: proxmox_home
+    delegate_to: proxmox
 
   - name: unarchive img
     raw: bunzip2 /var/lib/vz/template/iso/{{coreos_image_name}}.bz2
     when: coreos_image_file.stat.exists == False
-    delegate_to: proxmox_home
+    delegate_to: proxmox
 
   - name: Copy coreos img
     copy:
@@ -38,15 +38,15 @@
       group: root
       mode: 0600
       remote_src: yes
-    delegate_to: proxmox_home
+    delegate_to: proxmox
 
   - name: Create qcow
     shell: qemu-img create -f qcow2 -b /var/lib/vz/images/{{vmnumber}}/{{coreos_image_name}} /var/lib/vz/images/{{vmnumber}}/vm-{{vmnumber}}-disk-1.qcow2
-    delegate_to: proxmox_home
+    delegate_to: proxmox
 
   - name: Resize qcow
     shell: qemu-img resize /var/lib/vz/images/{{vmnumber}}/vm-{{vmnumber}}-disk-1.qcow2  {{disk_size}}G
-    delegate_to: proxmox_home
+    delegate_to: proxmox
 
   - name: Copy coreos ignition
     template:
@@ -55,7 +55,7 @@
       owner: root
       group: root
       mode: 0600
-    delegate_to: proxmox_home
+    delegate_to: proxmox
 
   - name: Create VM
     proxmox_kvm:
