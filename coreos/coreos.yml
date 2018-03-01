@@ -154,7 +154,7 @@
       group: core
       mode: 0600
 
-  - name: start all {{coreos_role}} services
+  - name: start all services
     shell: /home/core/mutualis-cloud/dc {{coreos_role}} start
 
 # hassio
