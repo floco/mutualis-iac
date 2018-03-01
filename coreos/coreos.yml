@@ -30,6 +30,12 @@
     when: coreos_image_file.stat.exists == False
     delegate_to: proxmox
 
+  - name: check if qcow already exists
+    stat:
+      path: /var/lib/vz/images/{{vmnumber}}/vm-{{vmnumber}}-disk-1.qcow2
+    register: coreos_qcow_file
+    delegate_to: proxmox
+
   - name: Copy coreos img
     copy:
       src: "/var/lib/vz/template/iso/{{coreos_image_name}}"
@@ -38,10 +44,12 @@
       group: root
       mode: 0600
       remote_src: yes
+    when: coreos_qcow_file.stat.exists == False
     delegate_to: proxmox
 
   - name: Create qcow
     shell: qemu-img create -f qcow2 -b /var/lib/vz/images/{{vmnumber}}/{{coreos_image_name}} /var/lib/vz/images/{{vmnumber}}/vm-{{vmnumber}}-disk-1.qcow2
+    when: coreos_qcow_file.stat.exists == False
     delegate_to: proxmox
 
   - name: Resize qcow
