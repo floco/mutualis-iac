@@ -133,7 +133,7 @@
   - name: Extract {{coreos_role}}-data.tgz
     unarchive:
       src: ./files/{{coreos_role}}-data.tgz
-      dest: /home/core/mutualis-cloud/{{coreos_role}}
+      dest: /home/core/mutualis-cloud
 
   - name: Copy .env
     template:
