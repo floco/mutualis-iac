@@ -89,7 +89,7 @@
     delegate_to: localhost
 
   - pause:
-      seconds: 30
+      seconds: 120
 
   roles:
     - vmware.coreos-bootstrap
