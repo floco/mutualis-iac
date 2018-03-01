@@ -57,6 +57,12 @@
       mode: 0600
     delegate_to: proxmox
 
+  - name: clean known_hosts
+    known_hosts:
+      name: "{{ ansible_host }}"
+      state: absent
+    delegate_to: localhost
+
   - name: Create VM
     proxmox_kvm:
       api_user: "{{ api_user }}"
