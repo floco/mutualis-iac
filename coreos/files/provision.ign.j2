@@ -21,7 +21,7 @@
   "networkd": {
     "units": [{
       "name": "00-eth0.network",
-      "contents": "[Match]\nName=eth0\n\n[Network]\nDNS={{dns}}\nAddress={{cidr}}\nGateway={{gateway}}"
+      "contents": "[Match]\nName=eth0\n\n[Network]\nDNS={{dns1}}\nDNS={{dns2}}\nAddress={{cidr}}\nGateway={{gateway}}"
     }]
   },
   "passwd": {
