@@ -130,6 +130,12 @@
       repo: 'https://github.com/floco/mutualis-cloud.git'
       dest: /home/core/mutualis-cloud
 
+  - name: Create archive of data
+    archive:
+      path: ./files/{{coreos_role}}
+      dest: ./files/{{coreos_role}}-data.tgz
+    delegate_to: localhost
+
   - name: Extract {{coreos_role}}-data.tgz
     unarchive:
       src: ./files/{{coreos_role}}-data.tgz
