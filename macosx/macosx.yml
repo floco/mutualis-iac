@@ -27,6 +27,7 @@
         - lastpass
         - zerotier-one
         - etcher
+        - coconutbattery
 
     - name: Install Browsers
       homebrew_cask: name={{ item }} state=present
