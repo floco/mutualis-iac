@@ -6,6 +6,7 @@
     file: path="/var/lib/vz/images/{{ vmnumber }}" state=directory
     delegate_to: proxmox
 
+# TODO: would be better to check also if there is a more recent version on the web
   - name: check if img is downloaded already
     stat:
       path: /var/lib/vz/template/iso/{{coreos_image_name}}
@@ -105,6 +106,7 @@
   - pause:
       seconds: 120
 
+# TODO: add the creation of an optional NAT rule
   roles:
     - vmware.coreos-bootstrap
 
