@@ -24,6 +24,8 @@
         - mutualis-beancount
         - mutualis-hass
 
-
-
-        
+    - name: Unarchive a file that needs to be downloaded (added in 2.0)
+      unarchive:
+        src: https://github.com/B00merang-Project/Windows-10/archive/master.zip
+        dest: ~/Downloads
+        remote_src: yes       
