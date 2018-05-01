@@ -1,0 +1,29 @@
+# trigger : ansible-playbook -K lubuntu/lubuntu.yml
+
+- hosts: localhost
+  gather_facts: false
+
+  tasks:
+
+    - name: Install Libs
+      apt: name={{item}} state=present
+      with_items:
+        - spice-vdagent
+        - onboard
+        - pass
+        - docker.io
+        - openssh-server
+        - net-tools
+      become: yes
+
+
+    - name: clone git repo
+      git: repo=https://github.com/floco/{{item}}.git dest=/home/julien/Documents/{{item}}
+      with_items:
+        - mutualis-cloud
+        - mutualis-beancount
+        - mutualis-hass
+
+
+
+        
