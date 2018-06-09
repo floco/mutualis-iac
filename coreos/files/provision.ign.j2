@@ -1,6 +1,6 @@
 {
   "ignition": {
-    "version": "2.0.0",
+    "version": "2.1.0",
     "config": {}
   },
   "storage": {
@@ -14,10 +14,28 @@
         },
         "user": {},
         "group": {}
+      },
+      {
+        "filesystem": "root",
+        "group": {},
+        "path": "/etc/coreos/update.conf",
+        "user": {},
+        "contents": {
+          "source": "data:,%0AREBOOT_STRATEGY%3D%22reboot%22%0ALOCKSMITHD_REBOOT_WINDOW_START%3D%22Sun%2004%3A00%22%0ALOCKSMITHD_REBOOT_WINDOW_LENGTH%3D%221h%22",
+          "verification": {}
+        },
+        "mode": 420
       }
     ]
   },
-  "systemd": {},
+  "systemd": {
+    "units": [
+      {
+        "name": "docker.service",
+        "enable": true
+      }
+    ]
+  },
   "networkd": {
     "units": [{
       "name": "00-eth0.network",
