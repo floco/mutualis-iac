@@ -28,6 +28,7 @@
         - zerotier-one
         - etcher
         - coconutbattery
+        - digikam
 
     - name: Install Browsers
       homebrew_cask: name={{ item }} state=present
