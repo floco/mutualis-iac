@@ -1,14 +1,44 @@
 ---
 
-- name: Network Getting Started First Playbook
+# - name: Gather Facts 
+#   connection: network_cli
+#   hosts: all
+#   tasks:
+
+#     - name: Get config for Edgeos devices
+#       edgeos_facts:
+#         gather_subset: all
+
+#     - name: Display the config
+#       debug:
+#         msg: "The hostname is {{ ansible_net_hostname }} and the OS is {{ ansible_net_version }}"
+
+
+- name: Configure Router
   connection: network_cli
   hosts: all
+  gather_facts: no
   tasks:
 
-    - name: Get config for Edgeos devices
-      edgeos_facts:
-        gather_subset: all
+    - name: General configuration
+      edgeos_config:
+        lines: 
+          - "{{ item }}"
+      with_lines: cat config.secrets | awk '{$2=$2};1' | awk 'NF'
+      when: item is not search("#")    
 
-    - name: Display the config
-      debug:
-        msg: "The hostname is {{ ansible_net_hostname }} and the OS is {{ ansible_net_version }}"
+    - name: Configure DNS static hosts
+      edgeos_config:
+        lines: 
+          - set system static-host-mapping host-name {{ item.split(" ")[0] }} inet {{ item.split(" ")[1] }}
+      with_lines: cat ipam_db.secrets | awk '{$2=$2};1' | awk 'NF'
+      when: item is not search("#")
+    
+    - name: Configure DHCP static mapping
+      edgeos_config:
+        lines: 
+          - set service dhcp-server shared-network-name {{ item.split(" ")[3] }} subnet {{ item.split(" ")[4] }} static-mapping {{ item.split(" ")[0] }}  mac-address {{ item.split(" ")[2] }} 
+          - set service dhcp-server shared-network-name {{ item.split(" ")[3] }} subnet {{ item.split(" ")[4] }} static-mapping {{ item.split(" ")[0] }}  ip-address {{ item.split(" ")[1] }}
+      with_lines: cat ipam_db.secrets | awk '{$2=$2};1' | awk 'NF'
+      when: item is not search("#")
+    
