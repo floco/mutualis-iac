@@ -29,13 +29,14 @@
         - flux
         - quicklook-csv 
         - quicklook-json 
-  #      - bootchamp
+        - docker
         - superduper
         - teamviewer
-  #      - zerotier-one
         - etcher
         - coconutbattery
   #      - digikam
+  #      - bootchamp
+  #      - zerotier-one
 
     - name: Install Browsers
       homebrew_cask: name={{ item }} state=present
@@ -56,6 +57,7 @@
       with_items:
         - calibre
         - vlc
+        - deezer
 
     - name: Install Social Tools
       homebrew_cask: name={{ item }} state=present
@@ -76,9 +78,9 @@
   roles:
     - geerlingguy.mas
 
-  # To install via app store: amphetamine 
-  # To install manually: 
-  # To review first: station 
+  
+  # To install manually: ring
+
 
 
         
