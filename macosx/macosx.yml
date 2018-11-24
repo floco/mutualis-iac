@@ -1,3 +1,8 @@
+# Prerequisites:
+# 1) /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+# 2) brew install ansible
+# 3) Launch like this ansible-playbook macosx.yml
+
 
 - hosts: localhost
   gather_facts: false
@@ -7,7 +12,7 @@
     - name: Install Libs
       homebrew: name={{ item }} state=present
       with_items:
-        - fish
+   #     - fish
         - pyenv
 
     - name: Install Utilities
@@ -21,14 +26,14 @@
         - flux
         - quicklook-csv 
         - quicklook-json 
-        - bootchamp
+  #      - bootchamp
         - superduper
         - teamviewer
         - lastpass
-        - zerotier-one
+  #      - zerotier-one
         - etcher
         - coconutbattery
-        - digikam
+  #      - digikam
 
     - name: Install Browsers
       homebrew_cask: name={{ item }} state=present
@@ -56,7 +61,15 @@
         - skype
 
   
-
+- hosts: localhost
+  vars:
+    mas_installed_apps:
+      - { id: 425264550, name: "Blackmagic Disk Speed Test" }
+      - { id: 411643860, name: "DaisyDisk" }
+      - { id: 937984704, name: "Amphetamine" }
+      
+  roles:
+    - geerlingguy.mas
 
   # To install via app store: amphetamine 
   # To install manually: 
