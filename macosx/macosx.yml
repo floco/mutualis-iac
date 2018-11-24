@@ -2,7 +2,9 @@
 # 1) /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 # 2) brew install ansible
 # 3) ansible-galaxy install geerlingguy.mas
-# 4) Launch like this ansible-playbook macosx.yml
+# 4) brew cask
+# 5) brew tap buo/cask-upgrade
+# 6) Launch like this ansible-playbook macosx.yml
 
 
 - hosts: localhost
