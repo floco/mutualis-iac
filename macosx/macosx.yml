@@ -15,7 +15,7 @@
     - name: Install Libs
       homebrew: name={{ item }} state=present
       with_items:
-   #     - fish
+        - fish
         - pyenv
         - mas
 
