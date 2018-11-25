@@ -55,7 +55,7 @@
         - iterm2 
         - sequel-pro 
         - sourcetree
-        - github-desktop
+        - github
 
     - name: Install Media App
       homebrew_cask: name={{ item }} state=present
