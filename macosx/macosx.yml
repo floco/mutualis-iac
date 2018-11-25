@@ -30,11 +30,14 @@
         - quicklook-csv 
         - quicklook-json 
         - docker
+        - kitematic
         - superduper
         - teamviewer
         - etcher
         - coconutbattery
         - virtualbox
+        - authy
+        - google-earth
   #      - digikam
   #      - bootchamp
   #      - zerotier-one
@@ -52,6 +55,7 @@
         - visual-studio-code
         - iterm2 
         - sequel-pro 
+        - sourcetree
 
     - name: Install Media App
       homebrew_cask: name={{ item }} state=present
@@ -75,6 +79,8 @@
       - { id: 472226235, name: "Lanscan" }
       - { id: 926036361, name: "Lastpass" }
       - { id: 425424353, name: "The Unarchiver" }
+      - { id: 497799835, name: "Xcode" }
+      
       
   roles:
     - geerlingguy.mas
