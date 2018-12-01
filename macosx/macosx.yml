@@ -80,8 +80,8 @@
       - { id: 926036361, name: "Lastpass" }
       - { id: 425424353, name: "The Unarchiver" }
       - { id: 497799835, name: "Xcode" }
-      
-      
+      - { id: 523620159, name: "Clean My Drive" }
+
   roles:
     - geerlingguy.mas
 
