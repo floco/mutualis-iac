@@ -37,6 +37,7 @@
         - virtualbox
         - authy
         - google-earth
+        - rsyncosx
   #      - digikam
   #      - bootchamp
   #      - zerotier-one
@@ -86,7 +87,7 @@
     - geerlingguy.mas
 
   
-  # To install manually: ring
+  # To install manually: ring, RsyncOSXsched
 
 
 
