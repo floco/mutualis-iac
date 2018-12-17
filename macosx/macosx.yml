@@ -38,6 +38,7 @@
         - authy
         - google-earth
         - rsyncosx
+        - homebrew/cask-drivers/lg-onscreen-control
   #      - digikam
   #      - bootchamp
   #      - zerotier-one
