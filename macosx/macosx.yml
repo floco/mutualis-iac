@@ -39,6 +39,8 @@
         - google-earth
         - rsyncosx
         - homebrew/cask-drivers/lg-onscreen-control
+        - lulu
+        - avast-security
   #      - digikam
   #      - bootchamp
   #      - zerotier-one
