@@ -38,7 +38,7 @@
         - authy
         - google-earth
         - rsyncosx
-        - homebrew/cask-drivers/lg-onscreen-control
+  #      - homebrew/cask-drivers/lg-onscreen-control
         - lulu
         - avast-security
   #      - digikam
