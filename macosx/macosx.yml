@@ -22,25 +22,27 @@
     - name: Install Utilities
       homebrew_cask: name={{ item }} state=present
       with_items:
-        - spectacle
-        - google-backup-and-sync
         - android-file-transfer
-        - imageoptim
+        - authy
+        - avast-security
+        - bitbar
+        - coconutbattery
+        - docker
+        - etcher
         - flux
+        - google-backup-and-sync
+        - google-earth
+        - imageoptim
+        - lulu
         - quicklook-csv 
         - quicklook-json 
-        - docker
+        - rsyncosx
+        - smcfancontrol
+        - spectacle
         - superduper
         - teamviewer
-        - etcher
-        - coconutbattery
         - virtualbox
-        - authy
-        - google-earth
-        - rsyncosx
   #      - homebrew/cask-drivers/lg-onscreen-control
-        - lulu
-        - avast-security
   #      - digikam
   #      - bootchamp
   #      - zerotier-one
