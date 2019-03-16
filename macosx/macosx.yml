@@ -88,7 +88,8 @@
       - { id: 497799835, name: "Xcode" }
       - { id: 523620159, name: "Clean My Drive" }
       - { id: 490461369, name: "Bandwidth+" }
-
+      - { id: 921923693, name: "LibreOffice Vanilla" }
+      
   roles:
     - geerlingguy.mas
 
