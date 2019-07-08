@@ -42,6 +42,7 @@
         - superduper
         - teamviewer
         - virtualbox
+        - gimp
   #      - homebrew/cask-drivers/lg-onscreen-control
   #      - digikam
   #      - bootchamp
@@ -50,9 +51,11 @@
     - name: Install Browsers
       homebrew_cask: name={{ item }} state=present
       with_items:
-        - opera
+#        - opera
+        - brave-browser
         - google-chrome
-        - firefox 
+#        - firefox
+#        - vivaldi 
 
     - name: Install Dev Tools
       homebrew_cask: name={{ item }} state=present
