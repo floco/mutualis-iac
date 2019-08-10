@@ -31,8 +31,6 @@
         - etcher
         - flux
         - google-backup-and-sync
-        - google-earth
-        - imageoptim
         - lulu
         - quicklook-csv 
         - quicklook-json 
@@ -42,11 +40,19 @@
         - superduper
         - teamviewer
         - virtualbox
-        - gimp
   #      - homebrew/cask-drivers/lg-onscreen-control
-  #      - digikam
+
   #      - bootchamp
   #      - zerotier-one
+
+    - name: Install Productivity App
+      homebrew_cask: name={{ item }} state=present
+      with_items:
+        - gimp
+        - sweet-home3d
+        - google-earth
+        - imageoptim
+#         - digikam
 
     - name: Install Browsers
       homebrew_cask: name={{ item }} state=present
