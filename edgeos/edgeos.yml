@@ -20,12 +20,12 @@
   gather_facts: no
   tasks:
 
-    - name: General configuration
-      edgeos_config:
-        lines: 
-          - "{{ item }}"
-      with_lines: cat config.secrets | awk '{$2=$2};1' | awk 'NF'
-      when: item is not search("#")    
+    # - name: General configuration
+    #   edgeos_config:
+    #     lines: 
+    #       - "{{ item }}"
+    #   with_lines: cat config.secrets | awk '{$2=$2};1' | awk 'NF'
+    #   when: item is not search("#")    
 
     - name: Configure DNS static hosts
       edgeos_config:

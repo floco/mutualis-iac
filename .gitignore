@@ -113,3 +113,6 @@ ENV/
 
 # secrets
 *.secrets
+
+# hidden files
+.*
