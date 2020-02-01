@@ -86,7 +86,7 @@
       homebrew_cask: name={{ item }} state=present
       with_items:
         - skype
-        - x-lite
+        - bria
 
   
 - hosts: localhost
@@ -102,6 +102,7 @@
       - { id: 523620159, name: "Clean My Drive" }
       - { id: 490461369, name: "Bandwidth+" }
       - { id: 921923693, name: "LibreOffice Vanilla" }
+      - { id: 1295203466, name: "Microsoft Remote Desktop" }
 #      - { id: 1086871235, name: "Reolink" }
       
   roles:

@@ -1,0 +1,88 @@
+# Prerequisites:
+# 1) /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+# 2) brew install ansible
+# 3) ansible-galaxy install geerlingguy.mas
+# 4) brew cask
+# 5) brew tap buo/cask-upgrade
+# 6) Launch like this ansible-playbook macosx_essentials.yml
+
+
+- hosts: localhost
+  gather_facts: false
+
+  tasks:
+
+- hosts: localhost
+  gather_facts: false
+
+  tasks:
+
+    - name: Copy .zshrc
+      copy:
+        src: .zshrc
+        dest: /Users/julien/
+        owner: julien
+        group: staff
+        mode: 0644
+
+    - name: Install Libs
+      homebrew: name={{ item }} state=present
+      loop:
+        - mas
+
+    - name: Install Utilities
+      homebrew_cask: name={{ item }} state=present
+      loop:
+        - bitbar
+        - lulu
+        - spectacle
+        - superduper
+
+    - name: Install Productivity App
+      homebrew_cask: name={{ item }} state=present
+      loop:
+        - sweet-home3d
+
+    - name: Install Browsers
+      homebrew_cask: name={{ item }} state=present
+      loop:
+        - microsoft-edge
+
+    - name: Install Dev Tools
+      homebrew_cask: name={{ item }} state=present
+      loop:
+        - visual-studio-code
+        - terminus
+
+    - name: Install Media App
+      homebrew_cask: name={{ item }} state=present
+      loop:
+        - calibre
+        - vlc
+
+    - name: Install Social Tools
+      homebrew_cask: name={{ item }} state=present
+      loop:
+        - bria
+
+  
+- hosts: localhost
+  vars:
+    mas_installed_apps:
+      - { id: 411643860, name: "Daisy Disk" }
+      - { id: 937984704, name: "Amphetamine" }
+      - { id: 472226235, name: "Lanscan" }
+      - { id: 425424353, name: "The Unarchiver" }
+      - { id: 497799835, name: "Xcode" }
+      - { id: 523620159, name: "Clean My Drive" }
+      - { id: 921923693, name: "LibreOffice Vanilla" }
+      - { id: 1295203466, name: "Microsoft Remote Desktop" }
+      
+  roles:
+    - geerlingguy.mas
+
+  
+  # To install manually: ring, RsyncOSXsched, davinci resolve
+
+
+        
