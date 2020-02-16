@@ -29,6 +29,8 @@
       homebrew: name={{ item }} state=present
       loop:
         - mas
+        - youtube-dl
+        - ffmpeg
 
     - name: Install Utilities
       homebrew_cask: name={{ item }} state=present
