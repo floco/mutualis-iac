@@ -1,5 +1,7 @@
 ---
 
+# execute like this : ansible-playbook -i <hostname>, -u admin -k edgeos.yml
+
 # - name: Gather Facts 
 #   connection: network_cli
 #   hosts: all
@@ -12,7 +14,10 @@
 #     - name: Display the config
 #       debug:
 #         msg: "The hostname is {{ ansible_net_hostname }} and the OS is {{ ansible_net_version }}"
-
+#   vars:
+#     ansible_ssh_user: admin
+#     ansible_network_os: vyos
+#     ansible_connection: network_cli
 
 - name: Configure Router
   connection: network_cli
@@ -41,4 +46,8 @@
           - set service dhcp-server shared-network-name {{ item.split(" ")[3] }} subnet {{ item.split(" ")[4] }} static-mapping {{ item.split(" ")[0] }}  ip-address {{ item.split(" ")[1] }}
       with_lines: cat ipam_db.secrets | awk '{$2=$2};1' | awk 'NF'
       when: item is not search("#")
-    
+
+  vars:
+    ansible_ssh_user: admin
+    ansible_network_os: vyos
+    ansible_connection: network_cli    

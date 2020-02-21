@@ -30,7 +30,7 @@
         - bitbar
         - coconutbattery
         - docker
-        - etcher
+        - balenaetcher
         - flux
         - google-backup-and-sync
         - lulu
