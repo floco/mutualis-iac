@@ -20,8 +20,8 @@
     - name: Copy .zshrc
       copy:
         src: .zshrc
-        dest: /Users/julien/
-        owner: julien
+        dest: /Users/coupard/
+        owner: coupard
         group: staff
         mode: 0644
 
