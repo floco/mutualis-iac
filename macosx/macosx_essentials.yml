@@ -31,6 +31,8 @@
         - mas
         - youtube-dl
         - ffmpeg
+        - pipx
+        - exiftool
 
     - name: Install Utilities
       homebrew_cask: name={{ item }} state=present
@@ -66,6 +68,7 @@
       homebrew_cask: name={{ item }} state=present
       loop:
         - bria
+        - signal
 
   
 - hosts: localhost
