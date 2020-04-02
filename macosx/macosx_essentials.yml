@@ -41,6 +41,7 @@
         - lulu
         - spectacle
         - superduper
+        - android-file-transfer
 
     - name: Install Productivity App
       homebrew_cask: name={{ item }} state=present
