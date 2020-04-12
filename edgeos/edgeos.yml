@@ -35,15 +35,15 @@
     - name: Configure DNS static hosts
       edgeos_config:
         lines: 
-          - set system static-host-mapping host-name {{ item.split(" ")[0] }} inet {{ item.split(" ")[1] }}
+          - set system static-host-mapping host-name {{ item.split(" ")[1] }} inet {{ item.split(" ")[0] }}
       with_lines: cat ipam_db.secrets | awk '{$2=$2};1' | awk 'NF'
       when: item is not search("#")
     
     - name: Configure DHCP static mapping
       edgeos_config:
         lines: 
-          - set service dhcp-server shared-network-name {{ item.split(" ")[3] }} subnet {{ item.split(" ")[4] }} static-mapping {{ item.split(" ")[0] }}  mac-address {{ item.split(" ")[2] }} 
-          - set service dhcp-server shared-network-name {{ item.split(" ")[3] }} subnet {{ item.split(" ")[4] }} static-mapping {{ item.split(" ")[0] }}  ip-address {{ item.split(" ")[1] }}
+          - set service dhcp-server shared-network-name {{ item.split(" ")[3] }} subnet {{ item.split(" ")[4] }} static-mapping {{ item.split(" ")[1] }}  mac-address {{ item.split(" ")[2] }} 
+          - set service dhcp-server shared-network-name {{ item.split(" ")[3] }} subnet {{ item.split(" ")[4] }} static-mapping {{ item.split(" ")[1] }}  ip-address {{ item.split(" ")[0] }}
       with_lines: cat ipam_db.secrets | awk '{$2=$2};1' | awk 'NF'
       when: item is not search("#")
 

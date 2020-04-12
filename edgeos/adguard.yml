@@ -1,0 +1,23 @@
+---
+
+# execute like this : ansible-playbook adguard.yml
+
+- name: Configure Adguard
+  hosts: localhost
+  gather_facts: no
+  tasks:
+
+    - name: Read users from CSV file and return a list
+      read_csv:
+        path: ipam_db_csv.secrets
+        fieldnames: ip,name,mac,zone,subnet,tag
+        delimiter: ','
+      register: clients
+
+    - name: Rendering adguard configuration
+      template:
+         src: adguard.j2
+         dest: AdGuardHome.yaml.secrets
+    
+
+  
