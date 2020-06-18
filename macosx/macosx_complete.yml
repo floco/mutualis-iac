@@ -42,6 +42,9 @@
         - superduper
         - cyberduck
         - virtualbox
+        - krita     # drawing app
+        - kap       # record screencast  
+        - blackhole # audio loopback
   #      - homebrew/cask-drivers/lg-onscreen-control
 
   #      - bootchamp

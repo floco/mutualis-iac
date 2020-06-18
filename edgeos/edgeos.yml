@@ -32,12 +32,12 @@
     #   with_lines: cat config.secrets | awk '{$2=$2};1' | awk 'NF'
     #   when: item is not search("#")    
 
-    - name: Configure DNS static hosts
-      edgeos_config:
-        lines: 
-          - set system static-host-mapping host-name {{ item.split(" ")[1] }} inet {{ item.split(" ")[0] }}
-      with_lines: cat ipam_db.secrets | awk '{$2=$2};1' | awk 'NF'
-      when: item is not search("#")
+    # - name: Configure DNS static hosts
+    #   edgeos_config:
+    #     lines: 
+    #       - set system static-host-mapping host-name {{ item.split(" ")[1] }} inet {{ item.split(" ")[0] }}
+    #   with_lines: cat ipam_db.secrets | awk '{$2=$2};1' | awk 'NF'
+    #   when: item is not search("#")
     
     - name: Configure DHCP static mapping
       edgeos_config:

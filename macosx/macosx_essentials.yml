@@ -33,6 +33,8 @@
         - ffmpeg
         - pipx
         - exiftool
+        - minio-mc
+        - rclone
 
     - name: Install Utilities
       homebrew_cask: name={{ item }} state=present
@@ -42,6 +44,9 @@
         - spectacle
         - superduper
         - android-file-transfer
+        - krita     # drawing app
+        - kap       # record screencast  
+        - blackhole # audio loopback
 
     - name: Install Productivity App
       homebrew_cask: name={{ item }} state=present
@@ -88,7 +93,7 @@
     - geerlingguy.mas
 
   
-  # To install manually: ring, RsyncOSXsched, davinci resolve
+  # To install manually: ring, RsyncOSXsched, davinci resolve, cpusetter
 
 
         
