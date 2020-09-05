@@ -116,3 +116,6 @@ ENV/
 
 # hidden files
 .*
+
+# terraform var
+terraform.tfvars
