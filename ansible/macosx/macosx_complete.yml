@@ -58,6 +58,7 @@
         - google-earth
         - imageoptim
         - krita
+        - notion
 #         - digikam
 
     - name: Install Browsers

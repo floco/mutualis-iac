@@ -52,6 +52,7 @@
       homebrew_cask: name={{ item }} state=present
       loop:
         - sweet-home3d
+        - notion
 
     - name: Install Browsers
       homebrew_cask: name={{ item }} state=present
