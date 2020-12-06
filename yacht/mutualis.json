@@ -106,21 +106,11 @@
     ],
     "ports": [
       {
-        "dnstcp": "53:53/tcp"
-      },
-      {
-        "dnsudp": "53:53/udp"
-      },
-      {
-        "dhcpudp": "67:67/udp"
-      },
-      {
-        "dhcptcp": "68:68/tcp"
-      },
-      {
-        "dnstls": "853:853/tcp"
-      },
-      {
+        "dnstcp": "53:53/tcp",
+        "dnsudp": "53:53/udp",
+        "dhcpudp": "67:67/udp",
+        "dhcptcp": "68:68/tcp",
+        "dnstls": "853:853/tcp",
         "WebUI": "8003:45158/tcp"
       }
     ],
