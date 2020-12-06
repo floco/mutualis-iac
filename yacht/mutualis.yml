@@ -23,7 +23,6 @@
   volumes:
   - container: "/root"
     bind: "!finance"
-
 - type: 1
   title: Pyload
   name: pyload
@@ -48,7 +47,6 @@
     bind: "!downloads"
   - container: "/opt/pyload/pyload-config"
     bind: "!config/pyload"
-
 - type: 1
   title: Adguardhome
   name: adguardhome
