@@ -73,30 +73,3 @@ env:
   description: This is a description
   default: default
 
-# # PYLOAD: download management
-#   pyload:
-#     image: writl/pyload:latest
-#     container_name: pyload
-#     ports:
-#       - 8001:8000
-#     environment:
-#       - UID=1000
-#       - GID=1000
-#     volumes:
-#       - ${DOWNLOAD}:/opt/pyload/Downloads
-#       - ${VOLUMES_ROOT}/pyload:/opt/pyload/pyload-config
-#     restart: always
-
-# # FAVA: Finance management
-#   fava:
-#     image: grostim/fava-docker
-#     container_name: fava
-#     ports:
-#       - 8002:5000
-#     environment:
-#       - UID=1000
-#       - GID=1000
-#       - BEANCOUNT_FILE=/root/main.beancount
-#     volumes:
-#       - ${VOLUMES_ROOT}/fava:/root
-#     restart: always

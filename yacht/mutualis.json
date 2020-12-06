@@ -1,0 +1,68 @@
+[
+  {
+    "type": 1,
+    "title": "Fava",
+    "name": "fava",
+    "description": "Web Interface for beancount accounting",
+    "categories": ["Finance"],
+    "platform": "linux",
+    "logo": "https://beancount.github.io/fava/_static/logo.png",
+    "image": "grostim/fava-docker:latest",
+    "restart_policy": "unless-stopped",
+    "env": [
+      {
+        "name": "PUID",
+        "label": "PUID",
+        "default": "!PUID"
+      },
+      {
+        "name": "PGID",
+        "label": "PGID",
+        "default": "!PGID"
+      },
+      {
+        "name": "BEANCOUNT_FILE",
+        "label": "BEANCOUNT_FILE",
+        "default": "!BEANCOUNT_FILE"
+      }
+    ],
+    "ports": [
+      {
+        "WebUI": "8002:5000/tcp"
+      }
+    ],
+    "volumes": [
+      {
+        "container": "/root",
+        "bind": "!config/Fava"
+      }
+    ],
+  }
+]
+// # PYLOAD: download management
+//   pyload:
+//     image: writl/pyload:latest
+//     container_name: pyload
+//     ports:
+//       - 8001:8000
+//     environment:
+//       - UID=1000
+//       - GID=1000
+//     volumes:
+//       - ${DOWNLOAD}:/opt/pyload/Downloads
+//       - ${VOLUMES_ROOT}/pyload:/opt/pyload/pyload-config
+//     restart: always
+
+// # FAVA: Finance management
+//   fava:
+//     image: grostim/fava-docker
+//     container_name: fava
+//     ports:
+//       - 8002:5000
+//     environment:
+//       - UID=1000
+//       - GID=1000
+//       - BEANCOUNT_FILE=/root/main.beancount
+//     volumes:
+//       - ${VOLUMES_ROOT}/fava:/root
+//     restart: always
