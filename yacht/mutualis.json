@@ -145,7 +145,7 @@
     ],
     "platform": "linux",
     "logo": "https://developer.asustor.com/uploadIcons/0020_999_1596450839_Portainer_256.png",
-    "image": "adguard/adguardhome",
+    "image": "portainer/portainer",
     "restart_policy": "unless-stopped",
     "env": [
       {
