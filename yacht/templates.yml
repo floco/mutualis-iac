@@ -1,7 +1,7 @@
 ---
 type: 1
-title: App Title
-name: container-name
+title: Fava
+name: grostim/fava-docker
 description: This is a description.
 logo: https://raw.githubusercontent.com/SelfhostedPro/selfhosted_templates/master/Images/transmission-icon.png
 image: dev/application:latest
@@ -35,3 +35,68 @@ env:
   label: EnvWithDescription
   description: This is a description
   default: default
+---
+type: 1
+title: Pyload
+name: writl/pyload:latest
+description: This is a description.
+logo: https://raw.githubusercontent.com/SelfhostedPro/selfhosted_templates/master/Images/transmission-icon.png
+image: dev/application:latest
+note: This is a note
+categories:
+- Other
+- Tools
+platform: linux
+restart_policy: unless-stopped
+ports:
+- 9091:9091/tcp
+- 9090:9090/tcp
+network_mode: bridge
+volumes:
+- container: "/data"
+  bind: "!downloads"
+- container: "/etc/localtime"
+  bind: "!localtime"
+sysctls:
+- net.ipv6.conf.all.disable_ipv6: '0'
+cap_add:
+- NET_ADMIN
+env:
+- name: PUID
+  label: PUID
+  default: '1000'
+- name: PGID
+  label: PGID
+  default: '1000'
+- name: EnvWithDescription
+  label: EnvWithDescription
+  description: This is a description
+  default: default
+
+# # PYLOAD: download management
+#   pyload:
+#     image: writl/pyload:latest
+#     container_name: pyload
+#     ports:
+#       - 8001:8000
+#     environment:
+#       - UID=1000
+#       - GID=1000
+#     volumes:
+#       - ${DOWNLOAD}:/opt/pyload/Downloads
+#       - ${VOLUMES_ROOT}/pyload:/opt/pyload/pyload-config
+#     restart: always
+
+# # FAVA: Finance management
+#   fava:
+#     image: grostim/fava-docker
+#     container_name: fava
+#     ports:
+#       - 8002:5000
+#     environment:
+#       - UID=1000
+#       - GID=1000
+#       - BEANCOUNT_FILE=/root/main.beancount
+#     volumes:
+#       - ${VOLUMES_ROOT}/fava:/root
+#     restart: always
