@@ -44,7 +44,7 @@
     label: BEANCOUNT_FILE
     default: "/root/main.beancount"
   ports:
-  - WebUI: 8002:5000/tcp
+  - WebUI: 8003:5000/tcp
   volumes:
   - container: "/root"
     bind: "!finance"
