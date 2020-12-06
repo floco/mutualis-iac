@@ -80,7 +80,7 @@
       {
         "name": "BEANCOUNT_FILE",
         "label": "BEANCOUNT_FILE",
-        "default": "!BEANCOUNT_FILE"
+        "default": "/root/main.beancount"
       }
     ],
     "ports": [
@@ -91,7 +91,7 @@
     "volumes": [
       {
         "container": "/root",
-        "bind": "!config/Fava"
+        "bind": "!finance"
       }
     ]
   }
