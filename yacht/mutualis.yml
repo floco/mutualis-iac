@@ -76,3 +76,27 @@
     bind: "!config/adguard/work"
   - container: "/opt/adguardhome/conf"
     bind: "!config/adguard/conf"
+- type: 1
+  title: Portainer
+  name: portainer
+  description: Docker Management
+  categories:
+  - Management
+  platform: linux
+  logo: https://developer.asustor.com/uploadIcons/0020_999_1596450839_Portainer_256.png
+  image: adguard/adguardhome
+  restart_policy: unless-stopped
+  env:
+  - name: PUID
+    label: PUID
+    default: "!PUID"
+  - name: PGID
+    label: PGID
+    default: "!PGID"
+  ports:
+  - WebUI: 9000:9000/tcp
+  volumes:
+  - container: "/var/run/docker.sock"
+    bind: "/var/run/docker.sock"
+  - container: "/data"
+    bind: "!config/portainer"
