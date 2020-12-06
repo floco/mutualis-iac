@@ -23,8 +23,9 @@
   volumes:
   - container: "/root"
     bind: "!finance"
-- title: Pyload
-  type: 1
+
+- type: 1
+  title: Pyload
   name: pyload
   description: Web Interface to download
   categories:
@@ -48,8 +49,8 @@
   - container: "/opt/pyload/pyload-config"
     bind: "!config/pyload"
 
-- title: Adguardhome
-  type: 1
+- type: 1
+  title: Adguardhome
   name: adguardhome
   description: Ad blocker like PIHole
   categories:
