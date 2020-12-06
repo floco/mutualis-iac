@@ -48,56 +48,56 @@
   volumes:
   - container: "/root"
     bind: "!finance"
-- type: 1
-  title: Pyload
-  name: pyload
-  description: Web Interface to download
-  categories:
-  - Download
-  platform: linux
-  logo: https://beancount.github.io/fava/_static/logo.png
-  image: writl/pyload:latest
-  restart_policy: unless-stopped
-  env:
-  - name: PUID
-    label: PUID
-    default: "!PUID"
-  - name: PGID
-    label: PGID
-    default: "!PGID"
-  ports:
-  - WebUI: 8001:8000/tcp
-  volumes:
-  - container: "/opt/pyload/Downloads"
-    bind: "!downloads"
-  - container: "/opt/pyload/pyload-config"
-    bind: "!config/pyload"
-- type: 1
-  title: Adguardhome
-  name: adguardhome
-  description: Ad blocker like PIHole
-  categories:
-  - DNS
-  platform: linux
-  logo: https://beancount.github.io/fava/_static/logo.png
-  image: adguard/adguardhome
-  restart_policy: unless-stopped
-  env:
-  - name: PUID
-    label: PUID
-    default: "!PUID"
-  - name: PGID
-    label: PGID
-    default: "!PGID"
-  ports:
-  - 53:53/tcp
-  - 53:53/udp
-  - 67:67/udp
-  - 68:68/tcp
-  - 853:853/tcp
-  - WebUI: 8003:45158/tcp
-  volumes:
-  - container: "/opt/adguardhome/work"
-    bind: "!config/adguard/work"
-  - container: "/opt/adguardhome/conf"
-    bind: "!config/adguard/conf"
+# - type: 1
+#   title: Pyload
+#   name: pyload
+#   description: Web Interface to download
+#   categories:
+#   - Download
+#   platform: linux
+#   logo: https://beancount.github.io/fava/_static/logo.png
+#   image: writl/pyload:latest
+#   restart_policy: unless-stopped
+#   env:
+#   - name: PUID
+#     label: PUID
+#     default: "!PUID"
+#   - name: PGID
+#     label: PGID
+#     default: "!PGID"
+#   ports:
+#   - WebUI: 8001:8000/tcp
+#   volumes:
+#   - container: "/opt/pyload/Downloads"
+#     bind: "!downloads"
+#   - container: "/opt/pyload/pyload-config"
+#     bind: "!config/pyload"
+# - type: 1
+#   title: Adguardhome
+#   name: adguardhome
+#   description: Ad blocker like PIHole
+#   categories:
+#   - DNS
+#   platform: linux
+#   logo: https://beancount.github.io/fava/_static/logo.png
+#   image: adguard/adguardhome
+#   restart_policy: unless-stopped
+#   env:
+#   - name: PUID
+#     label: PUID
+#     default: "!PUID"
+#   - name: PGID
+#     label: PGID
+#     default: "!PGID"
+#   ports:
+#   - 53:53/tcp
+#   - 53:53/udp
+#   - 67:67/udp
+#   - 68:68/tcp
+#   - 853:853/tcp
+#   - WebUI: 8003:45158/tcp
+#   volumes:
+#   - container: "/opt/adguardhome/work"
+#     bind: "!config/adguard/work"
+#   - container: "/opt/adguardhome/conf"
+#     bind: "!config/adguard/conf"
