@@ -36,7 +36,7 @@
         "container": "/root",
         "bind": "!config/Fava"
       }
-    ],
+    ]
   }
 ]
 // # PYLOAD: download management
