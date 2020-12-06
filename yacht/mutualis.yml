@@ -24,8 +24,8 @@
   - container: "/root"
     bind: "!finance"
 - type: 1 
-  title: Fava
-  name: fava
+  title: Fava2
+  name: fava2
   description: Web Interface for beancount accounting
   categories:
   - Finance
