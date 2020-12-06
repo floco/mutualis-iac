@@ -1,3 +1,27 @@
+- type: 1
+  title: Pyload
+  name: pyload
+  description: Web Interface to download
+  categories:
+  - Download
+  platform: linux
+  logo: https://developer.asustor.com/uploadIcons/0020_999_1577779483_pyload_256.png
+  image: writl/pyload:latest
+  restart_policy: unless-stopped
+  env:
+  - name: PUID
+    label: PUID
+    default: "!PUID"
+  - name: PGID
+    label: PGID
+    default: "!PGID"
+  ports:
+  - WebUI: 8001:8000/tcp
+  volumes:
+  - container: "/opt/pyload/Downloads"
+    bind: "!downloads"
+  - container: "/opt/pyload/pyload-config"
+    bind: "!config/pyload"
 - type: 1 
   title: Fava
   name: fava
@@ -23,55 +47,6 @@
   volumes:
   - container: "/root"
     bind: "!finance"
-- type: 1 
-  title: Fava2
-  name: fava2
-  description: Web Interface for beancount accounting
-  categories:
-  - Finance
-  platform: linux
-  logo: https://beancount.github.io/fava/_static/logo.png
-  image: grostim/fava-docker
-  restart_policy: unless-stopped
-  env:
-  - name: PUID
-    label: PUID
-    default: "!PUID"
-  - name: PGID
-    label: PGID
-    default: "!PGID"
-  - name: BEANCOUNT_FILE
-    label: BEANCOUNT_FILE
-    default: "/root/main.beancount"
-  ports:
-  - WebUI: 8003:5000/tcp
-  volumes:
-  - container: "/root"
-    bind: "!finance"
-- type: 1
-  title: Pyload
-  name: pyload
-  description: Web Interface to download
-  categories:
-  - Download
-  platform: linux
-  logo: https://beancount.github.io/fava/_static/logo.png
-  image: writl/pyload:latest
-  restart_policy: unless-stopped
-  env:
-  - name: PUID
-    label: PUID
-    default: "!PUID"
-  - name: PGID
-    label: PGID
-    default: "!PGID"
-  ports:
-  - WebUI: 8001:8000/tcp
-  volumes:
-  - container: "/opt/pyload/Downloads"
-    bind: "!downloads"
-  - container: "/opt/pyload/pyload-config"
-    bind: "!config/pyload"
 - type: 1
   title: Adguardhome
   name: adguardhome
@@ -79,7 +54,7 @@
   categories:
   - DNS
   platform: linux
-  logo: https://beancount.github.io/fava/_static/logo.png
+  logo: https://developer.asustor.com/uploadIcons/0020_999_1595573041_AdGuardhome_256.png
   image: adguard/adguardhome
   restart_policy: unless-stopped
   env:
