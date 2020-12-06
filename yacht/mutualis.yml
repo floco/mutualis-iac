@@ -65,11 +65,11 @@
     label: PGID
     default: "!PGID"
   ports:
-  - dns-tcp: 53:53/tcp
-  - dns-udp: 53:53/udp
-  - dhcp-udp: 67:67/udp
-  - dhcp-tcp: 68:68/tcp
-  - thing: 853:853/tcp
+  - dnstcp: 53:53/tcp
+  - dnsudp: 53:53/udp
+  - dhcpudp: 67:67/udp
+  - dhcptcp: 68:68/tcp
+  - dnstls: 853:853/tcp
   - WebUI: 8003:45158/tcp
   volumes:
   - container: "/opt/adguardhome/work"
