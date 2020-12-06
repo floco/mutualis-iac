@@ -1,43 +1,16 @@
 [
   {
     "type": 1,
-    "title": "Airsonic",
-    "name": "airsonic",
-    "description": "Airsonic is a free, web-based media streamer, providing ubiqutious access to your music. Use it to share your music with friends, or to listen to your own music while at work. You can stream to multiple players simultaneously, for instance to one player in your kitchen and another in your living room.",
-    "logo": "https://raw.githubusercontent.com/SelfhostedPro/selfhosted_templates/master/Images/airsonic-logo.png",
-    "image": "linuxserver/airsonic:latest",
+    "title": "Pyload",
+    "name": "pyload",
+    "description": "Web Interface to download",
     "categories": [
-      "Music"
+      "Download"
     ],
     "platform": "linux",
+    "logo": "https://developer.asustor.com/uploadIcons/0020_999_1577779483_pyload_256.png",
+    "image": "writl/pyload:latest",
     "restart_policy": "unless-stopped",
-    "ports": [
-      {
-      "WebUI": "4040:4040/tcp"
-      }
-    ],
-    "volumes": [
-      {
-        "container": "/music",
-        "bind": "!music"
-      },
-      {
-        "container": "/playlists",
-        "bind": "!playlists"
-      },
-      {
-        "container": "/podcasts",
-        "bind": "!podcasts"
-      },
-      {
-        "container": "/media",
-        "bind": "!media/Airsonic"
-      },
-      {
-        "container": "/config",
-        "bind": "!config/Airsonic/"
-      }
-    ],
     "env": [
       {
         "name": "PUID",
@@ -48,11 +21,21 @@
         "name": "PGID",
         "label": "PGID",
         "default": "!PGID"
+      }
+    ],
+    "ports": [
+      {
+        "WebUI": "8001:8000/tcp"
+      }
+    ],
+    "volumes": [
+      {
+        "container": "/opt/pyload/Downloads",
+        "bind": "!downloads"
       },
       {
-        "name": "JAVA_OPTS",
-        "label": "JAVA_OPTS",
-        "default": "-Xms256m -Xmx512m"
+        "container": "/opt/pyload/pyload-config",
+        "bind": "!config/pyload"
       }
     ]
   },
@@ -61,7 +44,9 @@
     "title": "Fava",
     "name": "fava",
     "description": "Web Interface for beancount accounting",
-    "categories": ["Finance"],
+    "categories": [
+      "Finance"
+    ],
     "platform": "linux",
     "logo": "https://beancount.github.io/fava/_static/logo.png",
     "image": "grostim/fava-docker",
@@ -92,6 +77,61 @@
       {
         "container": "/root",
         "bind": "!finance"
+      }
+    ]
+  },
+  {
+    "type": 1,
+    "title": "Adguardhome",
+    "name": "adguardhome",
+    "description": "Ad blocker like PIHole",
+    "categories": [
+      "DNS"
+    ],
+    "platform": "linux",
+    "logo": "https://developer.asustor.com/uploadIcons/0020_999_1595573041_AdGuardhome_256.png",
+    "image": "adguard/adguardhome",
+    "restart_policy": "unless-stopped",
+    "env": [
+      {
+        "name": "PUID",
+        "label": "PUID",
+        "default": "!PUID"
+      },
+      {
+        "name": "PGID",
+        "label": "PGID",
+        "default": "!PGID"
+      }
+    ],
+    "ports": [
+      {
+        "dns-tcp": "53:53/tcp"
+      },
+      {
+        "dns-udp": "53:53/udp"
+      },
+      {
+        "dhcp-udp": "67:67/udp"
+      },
+      {
+        "dhcp-tcp": "68:68/tcp"
+      },
+      {
+        "thing": "853:853/tcp"
+      },
+      {
+        "WebUI": "8003:45158/tcp"
+      }
+    ],
+    "volumes": [
+      {
+        "container": "/opt/adguardhome/work",
+        "bind": "!config/adguard/work"
+      },
+      {
+        "container": "/opt/adguardhome/conf",
+        "bind": "!config/adguard/conf"
       }
     ]
   }
