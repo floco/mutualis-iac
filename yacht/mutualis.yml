@@ -23,7 +23,6 @@
   volumes:
   - container: "/root"
     bind: "!finance"
-
 # - title: Pyload
 #   type: 1
 #   name: pyload
