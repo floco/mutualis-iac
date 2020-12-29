@@ -6,6 +6,8 @@
 # 5) brew tap buo/cask-upgrade
 # 6) Launch like this ansible-playbook macosx.yml
 
+# TODO: integrate ohmyzsh
+# brew tap homebrew/cask-fonts
 
 - hosts: localhost
   gather_facts: false
@@ -76,11 +78,12 @@
       with_items:
         - visual-studio-code
 #        - iterm2
-        - terminus
+        - hyper
         - sequel-pro 
         - sourcetree
         - github
         - postman
+        - font-hack-nerd-font
 
     - name: Install Media App
       homebrew_cask: name={{ item }} state=present
