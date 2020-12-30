@@ -32,3 +32,8 @@ variable "pve_host_user" {
   description = "pve host user"
   default = ""
 }
+
+variable "github_token" {
+  description = "github token to retrieve private repo"
+  default = ""
+}

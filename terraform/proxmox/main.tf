@@ -69,7 +69,7 @@ resource "proxmox_lxc" "map" {
     provisioner "remote-exec" {
       inline = [
         "sudo chmod +x /tmp/bootstrap.sh",
-        "sudo /tmp/bootstrap.sh ${each.value.vmid} ${each.key}",
+        "sudo /tmp/bootstrap.sh ${each.value.vmid} ${each.key} ${var.github_token}",
       ]
       connection {
         type     = "ssh"
