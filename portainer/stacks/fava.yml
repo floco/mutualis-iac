@@ -1,0 +1,14 @@
+version: '2'
+services:
+  fava:
+    image: grostim/fava-docker
+    container_name: fava
+    ports:
+      - 8002:5000
+    environment:
+      - UID=1000
+      - GID=1000
+      - BEANCOUNT_FILE=/root/main.beancount
+    volumes:
+      - ./fava:/root
+    restart: always
