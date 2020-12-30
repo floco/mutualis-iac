@@ -15,11 +15,11 @@ provider "proxmox" {
 
 locals {
   vm_settings = {
-    "cloud"  =  { vmid = "101", size = "8G",  ram = "4096" },
-    "cam"   =   { vmid = "102", size = "16G", ram = "4096" },
-    "backup" =  { vmid = "103", size = "8G",  ram = "1024" },
-    "admin"  =  { vmid = "104", size = "8G",  ram = "1024" },
-    "gateway"  =  { vmid = "105", size = "8G",  ram = "1024" }
+    "gateway"   =   { vmid = "100", size = "8G",  ram = "1024" },
+    "admin"     =   { vmid = "101", size = "8G",  ram = "1024" },
+    "cloud"     =   { vmid = "102", size = "8G",  ram = "4096" },
+    "cam"       =   { vmid = "103", size = "16G", ram = "4096" },
+    "backup"    =   { vmid = "104", size = "8G",  ram = "1024" }
   }
 }
 
