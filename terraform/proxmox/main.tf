@@ -7,7 +7,7 @@ terraform {
 }
 
 provider "proxmox" {
-    pm_tls_insecure = false
+    pm_tls_insecure = true
     pm_api_url = var.pve_url
     pm_user = var.pve_user
     pm_password = var.pve_password
@@ -53,6 +53,7 @@ resource "proxmox_lxc" "map" {
     target_node = "pve01"
     unprivileged = true
     start = true
+    onboot = true
 
     provisioner "file" {
       source      = "bootstrap.sh"
