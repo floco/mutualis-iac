@@ -1,0 +1,7 @@
+# Purpose
+Creates containers on proxmox
+# Pre-req
+API must be reachable (disable FW if blocked)
+# Execute
+terraform plan
+terraform apply

@@ -41,13 +41,14 @@
         - quicklook-json 
         - rsyncosx
         - smcfancontrol
-        - spectacle
+        - rectangle
         - superduper
         - cyberduck
         - virtualbox
         - krita     # drawing app
         - kap       # record screencast  
         - blackhole # audio loopback
+        - pixel-picker
   #      - homebrew/cask-drivers/lg-onscreen-control
 
   #      - bootchamp

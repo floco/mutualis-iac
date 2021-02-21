@@ -43,12 +43,13 @@
       loop:
         - bitbar
         - lulu
-        - spectacle
+        - rectangle
         - superduper
         - android-file-transfer
         - krita     # drawing app
         - kap       # record screencast  
         - blackhole # audio loopback
+        - pixel-picker
 
     - name: Install Productivity App
       homebrew_cask: name={{ item }} state=present
