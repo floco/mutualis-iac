@@ -30,7 +30,7 @@
         - android-file-transfer
         - authy
         - avast-security
-        - bitbar
+        - xbar
         - coconutbattery
         - docker
         - balenaetcher
@@ -63,6 +63,7 @@
         - imageoptim
         - krita
         - notion
+        - portfolioperformance
 #         - digikam
 
     - name: Install Browsers

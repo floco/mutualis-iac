@@ -27,3 +27,8 @@ variable "cloudflare_domain" {
   description = "cloudflare_domain"
   default = ""
 }
+
+variable "cloudflare_access_group" {
+  description = "cloudflare_access_group"
+  default = ""
+}

@@ -41,7 +41,7 @@
     - name: Install Utilities
       homebrew_cask: name={{ item }} state=present
       loop:
-        - bitbar
+        - xbar
         - lulu
         - rectangle
         - superduper

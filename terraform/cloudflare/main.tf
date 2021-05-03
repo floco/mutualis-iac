@@ -13,7 +13,7 @@ provider "cloudflare" {
 
 # Create a record
 resource "cloudflare_record" "hosts" {
-  for_each = toset( ["test", "test2"] )
+  for_each = toset( ["vault", "test", "test2"] )
   zone_id = var.cloudflare_zone_id
   name    = each.key
   value   = var.cloudflare_dns_host
@@ -24,15 +24,15 @@ resource "cloudflare_record" "hosts" {
 
 resource "cloudflare_access_group" "groups" {
   account_id                = var.cloudflare_account_id
-  name                      = "mutualis"
+  name                      = var.cloudflare_access_group
 
   include {
-    email_domain = ["mutualis.com"]
+    email_domain = [var.cloudflare_domain]
   }
 }
 
 resource "cloudflare_access_application" "applications" {
-  for_each                  = toset( ["test", "test2"] )
+  for_each                  = toset( ["test2"] )
   account_id                = var.cloudflare_account_id
   name                      = each.key
   domain                    = "${each.key}.${var.cloudflare_domain}"

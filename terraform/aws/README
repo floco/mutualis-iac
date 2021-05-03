@@ -1,0 +1,9 @@
+# Purpose
+Create a a couple of EC2s
+# Pre-req
+brew install awscli
+Get Key 
+terraform init
+# Execute
+terraform plan
+terraform apply
