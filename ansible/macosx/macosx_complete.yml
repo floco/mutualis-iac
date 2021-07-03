@@ -115,7 +115,7 @@
       - { id: 490461369, name: "Bandwidth+" }
       - { id: 921923693, name: "LibreOffice Vanilla" }
       - { id: 1295203466, name: "Microsoft Remote Desktop" }
-#      - { id: 1086871235, name: "Reolink" }
+      - { id: 1475387142, name: "Tailscale" }
       
   roles:
     - geerlingguy.mas
