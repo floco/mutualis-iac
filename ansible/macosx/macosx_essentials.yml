@@ -68,6 +68,7 @@
         - visual-studio-code
         - hyper
         - font-hack-nerd-font
+        - arduino
 
     - name: Install Media App
       homebrew_cask: name={{ item }} state=present

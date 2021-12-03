@@ -1,0 +1,26 @@
+<!-- in ~/Library/LaunchAgents/com.mutualis.sync.plist loaded via launchctl -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <!-- The label should be the same as the filename without the extension -->
+    <string>com.mutualis.sync</string>
+    <!-- Specify how to run your program here -->
+    <key>ProgramArguments</key>
+    <array>
+        <string>/usr/bin/open</string>
+        <string>/Users/julien/sync.app</string>
+    </array>
+    <!-- Run every day  -->
+    <key>StartCalendarInterval</key>
+    <dict>
+          <key>Weekday</key>
+          <integer>5</integer>
+          <key>Hour</key>
+          <integer>20</integer>
+          <key>Minute</key>
+          <integer>30</integer>
+    </dict>
+</dict>
+</plist>

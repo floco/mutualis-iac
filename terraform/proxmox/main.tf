@@ -15,11 +15,13 @@ provider "proxmox" {
 
 locals {
   vm_settings = {
-    "gateway"   =   { vmid = "100", size = "8G",  ram = "1024" },
-    "admin"     =   { vmid = "101", size = "8G",  ram = "1024" },
-    "cloud"     =   { vmid = "102", size = "8G",  ram = "4096" },
-    "cam"       =   { vmid = "103", size = "16G", ram = "4096" },
-    "backup"    =   { vmid = "104", size = "8G",  ram = "1024" }
+    "gateway"   =   { vmid = "100", size = "8G",  ram = "1024", os = "local:vztmpl/alpine-3.12-default_20200823_amd64.tar.xz" },
+    "admin"     =   { vmid = "101", size = "8G",  ram = "1024", os = "local:vztmpl/alpine-3.12-default_20200823_amd64.tar.xz" },
+    "cloud"     =   { vmid = "102", size = "8G",  ram = "4096", os = "local:vztmpl/alpine-3.12-default_20200823_amd64.tar.xz" },
+    "cam"       =   { vmid = "103", size = "16G", ram = "4096", os = "local:vztmpl/alpine-3.12-default_20200823_amd64.tar.xz" },
+    "backup"    =   { vmid = "104", size = "8G",  ram = "1024", os = "local:vztmpl/alpine-3.12-default_20200823_amd64.tar.xz" },
+    "web"       =   { vmid = "105", size = "25G",  ram = "4096", os = "local:vztmpl/debian-11-standard_11.0-1_amd64.tar.gz" },
+    "drive"    =    { vmid = "106", size = "100G",  ram = "2048", os = "local:vztmpl/alpine-3.12-default_20200823_amd64.tar.xz" }
   }
 }
 
@@ -47,8 +49,7 @@ resource "proxmox_lxc" "map" {
       storage = "local-lvm"
       size = each.value.size
     }
-    #ostemplate = "local:vztmpl/debian-10-standard_10.7-1_amd64.tar.gz"
-    ostemplate = "local:vztmpl/alpine-3.12-default_20200823_amd64.tar.xz"
+    ostemplate = each.value.os
     ssh_public_keys = var.pve_ssh_key
     target_node = "pve01"
     unprivileged = true
