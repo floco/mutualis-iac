@@ -50,6 +50,7 @@
         - kap       # record screencast  
         - blackhole # audio loopback
         - pixel-picker
+        - seafile-client
 
     - name: Install Productivity App
       homebrew_cask: name={{ item }} state=present

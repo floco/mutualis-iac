@@ -33,6 +33,11 @@ variable "pve_host_user" {
   default = ""
 }
 
+variable "pve_host_password" {
+  description = "pve host password"
+  default = ""
+}
+
 variable "github_token" {
   description = "github token to retrieve private repo"
   default = ""

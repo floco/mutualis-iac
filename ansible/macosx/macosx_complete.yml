@@ -49,6 +49,7 @@
         - kap       # record screencast  
         - blackhole # audio loopback
         - pixel-picker
+        - seafile-client
   #      - homebrew/cask-drivers/lg-onscreen-control
 
   #      - bootchamp

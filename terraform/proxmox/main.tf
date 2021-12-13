@@ -65,6 +65,7 @@ resource "proxmox_lxc" "map" {
         user     = var.pve_host_user
         host     = var.pve_host_name
         port     = var.pve_host_port
+        password = var.pve_host_password
       }
     }
 
@@ -78,6 +79,7 @@ resource "proxmox_lxc" "map" {
         user     = var.pve_host_user
         host     = var.pve_host_name
         port     = var.pve_host_port
+        password = var.pve_host_password
       }
     }
 }

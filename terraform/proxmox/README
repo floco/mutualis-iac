@@ -2,6 +2,7 @@
 Creates containers on proxmox
 # Pre-req
 API must be reachable (disable FW if blocked)
+need to retrieve password for user
 # Execute
 terraform plan
 terraform apply
