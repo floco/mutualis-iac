@@ -161,8 +161,8 @@
     ],
     "volumes": [
       {
-        "container": "/app/public",
-        "bind": "!config/dashy"
+        "container": "/app/public/conf.yml",
+        "bind": "!config/dashy/conf.yml"
       }
     ]
   },
