@@ -82,6 +82,47 @@
   },
   {
     "type": 1,
+    "title": "Dashy",
+    "name": "dashy",
+    "description": "Dashy helps you organize your self-hosted services by making them accessible from a single place",
+    "categories": [
+      "Dashboard"
+    ],
+    "platform": "linux",
+    "logo": "https://camo.githubusercontent.com/6c0964f4604a6807c263c83fff293258a908bdff7587910976d11c4e67a589bb/68747470733a2f2f692e6962622e636f2f796862743643592f64617368792e706e67",
+    "image": "lissy93/dashy",
+    "restart_policy": "unless-stopped",
+    "env": [
+      {
+        "name": "PUID",
+        "label": "PUID",
+        "default": "!PUID"
+      },
+      {
+        "name": "PGID",
+        "label": "PGID",
+        "default": "!PGID"
+      },
+      {
+        "name": "NODE_ENV",
+        "label": "NODE_ENV",
+        "default": "production"
+      }
+    ],
+    "ports": [
+      {
+        "WebUI": "8004:80/tcp"
+      }
+    ],
+    "volumes": [
+      {
+        "container": "/app/public",
+        "bind": "!config/dashy"
+      }
+    ]
+  },
+  {
+    "type": 1,
     "title": "Adguardhome",
     "name": "adguardhome",
     "description": "Ad blocker like PIHole",
