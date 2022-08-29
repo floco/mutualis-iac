@@ -16,25 +16,49 @@ defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
 defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
 
 ## ROSETTA
-/usr/sbin/softwareupdate --install-rosetta
+if [ $(/usr/bin/pgrep oahd >/dev/null 2>&1;echo $?) -eq 0 ]; then echo 'Rosetta already installed'; else /usr/sbin/softwareupdate --install-rosetta; fi
 
 ## INSTALL SW VIA BREW
+### UTILITIES
 brew install \
 mas \
-microsoft-edge \
-notion \
-visual-studio-code \
 xbar \
 kopia \
-signal \
 rectangle \
-sweet-home3d \
-spotify \
+betterdisplay \
+youtube-dl \
+ffmpeg \
+splashtop-personal \
+teamviewer
+
+### PRODUCTIVITY
+brew install \
+signal \
+microsoft-edge \
+google-chrome \
+firefox \
+notion
+
+### CODE
+brew install \
+pipx \
+hyper \
+font-hack-nerd-font \
+arduino \
+visual-studio-code
+
+### 3D
+brew install \
 prusaslicer \
-molotov \
-jump \
-teamviewer \
+sweet-home3d \
+openscad \
 autodesk-fusion360
+
+### MEDIA
+brew install \
+molotov \
+stremio \
+spotify
 
 ## INSTALL SW VIA APP STORE
 mas lucky amphetamine
@@ -43,9 +67,11 @@ mas lucky spark
 mas lucky bitwarden
 mas lucky amazonprimevideo
 mas lucky whatsapp
+mas lucky eidreader
 
 ## ROSETTA APPS
 # autodesk-fusion360
 
 ## MANUAL STEPS
 # sync vscode settings
+# install eid driver, eid viewer and ACR38 car reader driver
