@@ -29,6 +29,7 @@ betterdisplay \
 youtube-dl \
 ffmpeg \
 splashtop-personal \
+logitech-options \
 teamviewer
 
 ### PRODUCTIVITY
@@ -37,6 +38,9 @@ signal \
 microsoft-edge \
 google-chrome \
 firefox \
+google-drive \
+discord \
+pdf-expert\
 notion
 
 ### CODE
@@ -45,6 +49,8 @@ pipx \
 hyper \
 font-hack-nerd-font \
 arduino \
+fzf \
+hyper \
 visual-studio-code
 
 ### 3D
@@ -68,6 +74,9 @@ mas lucky bitwarden
 mas lucky amazonprimevideo
 mas lucky whatsapp
 mas lucky eidreader
+mas lucky newsify
+mas lucky tailscale
+mas lucky testflight
 
 ## ROSETTA APPS
 # autodesk-fusion360
@@ -75,3 +84,4 @@ mas lucky eidreader
 ## MANUAL STEPS
 # sync vscode settings
 # install eid driver, eid viewer and ACR38 car reader driver
+# copy .zshrc and .ssh
