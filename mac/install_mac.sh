@@ -46,6 +46,7 @@ notion
 ### CODE
 brew install \
 pipx \
+git \
 hyper \
 font-hack-nerd-font \
 arduino \
@@ -64,6 +65,7 @@ autodesk-fusion360
 brew install \
 molotov \
 stremio \
+vlc \
 spotify
 
 ## INSTALL SW VIA APP STORE
