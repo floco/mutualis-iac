@@ -30,6 +30,7 @@ youtube-dl \
 ffmpeg \
 splashtop-personal \
 logitech-options \
+balenaetcher \
 teamviewer
 
 ### PRODUCTIVITY
