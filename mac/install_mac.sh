@@ -24,6 +24,7 @@ brew install \
 mas \
 xbar \
 kopia \
+kopiaui \
 rectangle \
 betterdisplay \
 youtube-dl \
@@ -31,6 +32,8 @@ ffmpeg \
 splashtop-personal \
 logitech-options \
 balenaetcher \
+coconutbattery \
+android-file-transfer \
 teamviewer
 
 ### PRODUCTIVITY
@@ -53,6 +56,7 @@ font-hack-nerd-font \
 arduino \
 fzf \
 hyper \
+pipx \
 visual-studio-code
 
 ### 3D
@@ -80,6 +84,8 @@ mas lucky eidreader
 mas lucky newsify
 mas lucky tailscale
 mas lucky testflight
+mas lucky mqttexplorer
+mas lucky authy
 
 ## ROSETTA APPS
 # autodesk-fusion360
@@ -88,3 +94,4 @@ mas lucky testflight
 # sync vscode settings
 # install eid driver, eid viewer and ACR38 car reader driver
 # copy .zshrc and .ssh
+# install osxphotos: pipx install osxphotos
