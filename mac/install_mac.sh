@@ -29,11 +29,11 @@ rectangle \
 betterdisplay \
 youtube-dl \
 ffmpeg \
-splashtop-personal \
 logitech-options \
 balenaetcher \
 coconutbattery \
 android-file-transfer \
+only-switch \
 teamviewer
 
 ### PRODUCTIVITY
@@ -72,6 +72,9 @@ molotov \
 stremio \
 vlc \
 spotify
+
+brew install --cask openbb-terminal
+brew install --cask insta360-studio
 
 ## INSTALL SW VIA APP STORE
 mas lucky amphetamine
